@@ -122,6 +122,13 @@
   .crypto-row td:nth-child(4) {
     display: none;
   }
+
+  /* Improve number formatting for mobile */
+  .crypto-price,
+  .crypto-change,
+  .crypto-market-cap {
+    font-weight: 600;
+  }
 }
 
 @media (max-width: 480px) {
@@ -151,10 +158,17 @@
     display: none;
   }
 
-  /* Make price and change columns more compact */
+  /* Make price and change columns more compact but readable */
   .crypto-price,
   .crypto-change {
     font-size: 11px;
+    font-weight: 700;
+  }
+
+  /* Improve rank display */
+  .crypto-rank {
+    font-size: 11px;
+    font-weight: 700;
   }
 }
 
@@ -162,14 +176,45 @@
 @media (hover: none) and (pointer: coarse) {
   .crypto-row {
     /* Increase touch target size */
-    min-height: 48px;
+    min-height: 52px;
   }
   
   .crypto-row td {
-    padding: 14px 8px;
+    padding: 16px 8px;
   }
   
   .crypto-row:active {
-    background-color: #e9ecef;
+    background-color: #e3f2fd;
+    transform: scale(0.98);
+    transition: all 0.1s ease;
+  }
+
+  /* Improve touch feedback */
+  .crypto-row:hover {
+    background-color: #f5f5f5;
+  }
+}
+
+/* Landscape orientation optimizations for mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  .crypto-row td {
+    padding: 8px 6px;
+  }
+  
+  .crypto-row {
+    min-height: 40px;
+  }
+  
+  .crypto-image {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .crypto-name-full {
+    font-size: 11px;
+  }
+  
+  .crypto-symbol {
+    font-size: 9px;
   }
 }

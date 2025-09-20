@@ -1,6 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
+import './styles/responsive-utils.css'; // Responsive utilities
 import './i18n'; // i18n initialization
 
 import { Header, ProtectedRoute, AuthRedirect } from './components/common';

@@ -62,4 +62,40 @@
     padding: 1rem;
     min-height: calc(100vh - 56px); /* Subtract mobile header height */
   }
+
+  .App-content h1 {
+    font-size: 1.5rem;
+  }
+
+  .App-content p {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .App-content {
+    padding: 0.75rem;
+    min-height: calc(100vh - 56px);
+  }
+
+  .App-content h1 {
+    font-size: 1.3rem;
+  }
+
+  .App-content p {
+    font-size: 0.85rem;
+  }
+}
+
+/* Touch-friendly improvements */
+@media (hover: none) and (pointer: coarse) {
+  .App-link {
+    padding: 4px;
+    margin: -4px;
+    border-radius: 4px;
+  }
+  
+  .App-link:active {
+    background-color: rgba(59, 130, 246, 0.1);
+  }
 }

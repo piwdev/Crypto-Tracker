@@ -106,13 +106,56 @@
 @media (max-width: 768px) {
   .language-selector__button {
     min-width: 80px;
-    padding: 0.375rem 0.5rem;
+    padding: 0.5rem 0.5rem;
     font-size: 0.8rem;
+    min-height: 36px; /* Touch-friendly height */
   }
   
   .language-selector__option {
-    padding: 0.375rem 0.5rem;
+    padding: 0.5rem 0.5rem;
     font-size: 0.8rem;
+    min-height: 40px; /* Touch-friendly option height */
+  }
+}
+
+@media (max-width: 480px) {
+  .language-selector__button {
+    min-width: 70px;
+    padding: 0.5rem 0.375rem;
+    font-size: 0.75rem;
+    min-height: 40px;
+  }
+  
+  .language-selector__option {
+    padding: 0.5rem 0.375rem;
+    font-size: 0.75rem;
+    min-height: 44px;
+  }
+}
+
+/* Touch-friendly improvements */
+@media (hover: none) and (pointer: coarse) {
+  .language-selector__button {
+    min-height: 44px; /* Minimum touch target */
+  }
+  
+  .language-selector__option {
+    min-height: 48px; /* Larger touch targets for options */
+  }
+  
+  .language-selector__button:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
+  }
+  
+  .language-selector__option:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+  
+  /* Improve dropdown positioning for touch devices */
+  .language-selector__dropdown {
+    margin-top: 0.5rem;
   }
 }
 

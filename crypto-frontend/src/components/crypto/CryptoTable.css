@@ -54,29 +54,114 @@
 @media (max-width: 768px) {
   .crypto-table-container {
     margin: 10px 0;
+    border-radius: 8px;
+    overflow: hidden;
   }
 
   .crypto-table {
     font-size: 12px;
+    min-width: 600px; /* Ensure horizontal scroll on very small screens */
   }
 
-  .crypto-table th {
+  .crypto-table th,
+  .crypto-table td {
     padding: 12px 8px;
+    min-width: 80px;
   }
 
-  /* Hide some columns on mobile to save space */
-  .crypto-table th:nth-child(4) {
+  /* Hide high_24h column on tablets to save space */
+  .crypto-table th:nth-child(4),
+  .crypto-table td:nth-child(4) {
     display: none;
+  }
+
+  /* Make price and change columns more prominent */
+  .crypto-table th:nth-child(3),
+  .crypto-table td:nth-child(3) {
+    min-width: 100px;
+  }
+
+  .crypto-table th:nth-child(5),
+  .crypto-table td:nth-child(5) {
+    min-width: 90px;
   }
 }
 
 @media (max-width: 480px) {
-  .crypto-table th {
+  .crypto-table-container {
+    margin: 8px 0;
+  }
+
+  .crypto-table {
+    min-width: 500px;
+  }
+
+  .crypto-table th,
+  .crypto-table td {
     padding: 10px 6px;
   }
 
   /* Hide market cap column on very small screens */
-  .crypto-table th:nth-child(6) {
+  .crypto-table th:nth-child(6),
+  .crypto-table td:nth-child(6) {
     display: none;
   }
+
+  /* Adjust column widths for mobile */
+  .crypto-table th:nth-child(1),
+  .crypto-table td:nth-child(1) {
+    min-width: 50px; /* Rank column */
+  }
+
+  .crypto-table th:nth-child(2),
+  .crypto-table td:nth-child(2) {
+    min-width: 150px; /* Name column */
+  }
+
+  .crypto-table th:nth-child(3),
+  .crypto-table td:nth-child(3) {
+    min-width: 90px; /* Price column */
+  }
+
+  .crypto-table th:nth-child(5),
+  .crypto-table td:nth-child(5) {
+    min-width: 80px; /* Change column */
+  }
+}
+
+/* Touch-friendly design for mobile devices */
+@media (hover: none) and (pointer: coarse) {
+  .crypto-table tbody tr {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .crypto-table tbody tr:active {
+    background-color: #e3f2fd;
+    transform: scale(0.98);
+  }
+  
+  .crypto-table th,
+  .crypto-table td {
+    padding: 14px 12px; /* Larger touch targets */
+  }
+}
+
+/* Improved horizontal scroll indicator */
+.crypto-table-container::-webkit-scrollbar {
+  height: 6px;
+}
+
+.crypto-table-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.crypto-table-container::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.crypto-table-container::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
 }

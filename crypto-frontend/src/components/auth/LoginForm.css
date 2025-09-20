@@ -120,6 +120,28 @@
 }
 
 /* Mobile responsiveness */
+@media (max-width: 768px) {
+  .login-form-container {
+    padding: 20px;
+    min-height: 75vh;
+  }
+
+  .login-form-card {
+    padding: 28px;
+  }
+
+  .form-input {
+    padding: 14px 16px; /* Larger touch targets */
+    font-size: 16px;
+  }
+
+  .login-button {
+    padding: 14px 24px;
+    font-size: 16px;
+    min-height: 48px; /* Touch-friendly button height */
+  }
+}
+
 @media (max-width: 480px) {
   .login-form-container {
     padding: 16px;
@@ -139,6 +161,38 @@
 
   .form-input {
     font-size: 16px; /* Prevent zoom on iOS */
+    padding: 16px; /* Even larger touch targets for small screens */
+    min-height: 48px;
+  }
+
+  .login-button {
+    min-height: 52px; /* Larger touch target for small screens */
+  }
+}
+
+/* Touch-friendly improvements */
+@media (hover: none) and (pointer: coarse) {
+  .form-input {
+    min-height: 48px;
+  }
+  
+  .login-button {
+    min-height: 48px;
+  }
+  
+  .login-button:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+  
+  .create-account-link {
+    padding: 8px;
+    margin: -8px;
+    border-radius: 4px;
+  }
+  
+  .create-account-link:active {
+    background-color: rgba(59, 130, 246, 0.1);
   }
 }
 

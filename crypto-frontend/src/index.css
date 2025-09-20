@@ -5,9 +5,59 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Improve text rendering on mobile */
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* Global responsive improvements */
+* {
+  box-sizing: border-box;
+}
+
+/* Improve touch scrolling on iOS */
+html {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Ensure images are responsive by default */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Improve button and input accessibility on mobile */
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* Touch-friendly focus styles */
+@media (hover: none) and (pointer: coarse) {
+  button:focus,
+  input:focus,
+  select:focus,
+  textarea:focus,
+  a:focus {
+    outline: 2px solid #007bff;
+    outline-offset: 2px;
+  }
+}
+
+/* Prevent horizontal scroll on small screens */
+body, html {
+  overflow-x: hidden;
+}
+
+/* Improve readability on small screens */
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+    line-height: 1.5;
+  }
 }

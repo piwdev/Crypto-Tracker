@@ -115,10 +115,39 @@
   
   .bookmark-button {
     min-width: auto;
-    width: 40px;
-    height: 40px;
+    width: 44px; /* Increased for better touch target */
+    height: 44px; /* Increased for better touch target */
     border-radius: 50%;
     padding: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .bookmark-button {
+    width: 48px; /* Even larger for very small screens */
+    height: 48px;
+  }
+  
+  .bookmark-button__icon {
+    font-size: 1.2rem;
+  }
+}
+
+/* Touch-friendly improvements */
+@media (hover: none) and (pointer: coarse) {
+  .bookmark-button {
+    min-height: 48px; /* Minimum touch target size */
+    min-width: 48px;
+  }
+  
+  .bookmark-button:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
+  }
+  
+  /* Larger touch targets for mobile */
+  .bookmark-button-container {
+    padding: 8px;
   }
 }
 
