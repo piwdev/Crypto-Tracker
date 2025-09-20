@@ -17,3 +17,6 @@ DATABASES = {
 PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.MD5PasswordHasher',
 ]
+
+# Allow testserver for manual testing
+ALLOWED_HOSTS = ['testserver', 'localhost', '127.0.0.1']
