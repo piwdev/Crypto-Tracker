@@ -114,7 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'JST'
 
 USE_I18N = True
 
@@ -145,6 +145,9 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 20,
 }
+
+# Custom User Model
+AUTH_USER_MODEL = 'api.User'
 
 # CORS settings
 CORS_ALLOWED_ORIGINS = [
