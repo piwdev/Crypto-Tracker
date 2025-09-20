@@ -1,0 +1,258 @@
+/* CryptoDetail Component Styles */
+.crypto-detail {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.crypto-detail__loading,
+.crypto-detail__error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  padding: 2rem;
+}
+
+/* Header */
+.crypto-detail__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.crypto-detail__header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.crypto-detail__title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.crypto-detail__image {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.crypto-detail__title-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.crypto-detail__name {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  color: #1a1a1a;
+}
+
+.crypto-detail__symbol {
+  font-size: 1.2rem;
+  color: #666;
+  font-weight: 500;
+}
+
+.crypto-detail__rank {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Content */
+.crypto-detail__content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.crypto-detail__section {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 1.5rem;
+  border-left: 4px solid #667eea;
+}
+
+.crypto-detail__section-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin: 0 0 1.5rem 0;
+  color: #1a1a1a;
+}
+
+.crypto-detail__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.crypto-detail__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: white;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.crypto-detail__item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.crypto-detail__label {
+  font-weight: 500;
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.crypto-detail__value {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #1a1a1a;
+  text-align: right;
+}
+
+.crypto-detail__price {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #2563eb;
+}
+
+/* Color classes for positive/negative changes */
+.crypto-detail__positive {
+  color: #059669 !important;
+}
+
+.crypto-detail__negative {
+  color: #dc2626 !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .crypto-detail {
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 8px;
+  }
+
+  .crypto-detail__header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .crypto-detail__header-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .crypto-detail__title {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .crypto-detail__name {
+    font-size: 1.5rem;
+  }
+
+  .crypto-detail__grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .crypto-detail__item {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+
+  .crypto-detail__label {
+    font-size: 0.9rem;
+  }
+
+  .crypto-detail__value {
+    text-align: center;
+  }
+
+  .crypto-detail__section {
+    padding: 1rem;
+  }
+
+  .crypto-detail__section-title {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .crypto-detail {
+    padding: 0.75rem;
+    margin: 0.5rem;
+  }
+
+  .crypto-detail__image {
+    width: 48px;
+    height: 48px;
+  }
+
+  .crypto-detail__name {
+    font-size: 1.3rem;
+  }
+
+  .crypto-detail__symbol {
+    font-size: 1rem;
+  }
+
+  .crypto-detail__rank {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+  }
+}
+
+/* Dark mode support (if needed in the future) */
+@media (prefers-color-scheme: dark) {
+  .crypto-detail {
+    background: #1f2937;
+    color: #f9fafb;
+  }
+
+  .crypto-detail__section {
+    background: #374151;
+  }
+
+  .crypto-detail__item {
+    background: #4b5563;
+  }
+
+  .crypto-detail__name,
+  .crypto-detail__section-title,
+  .crypto-detail__value {
+    color: #f9fafb;
+  }
+
+  .crypto-detail__label {
+    color: #d1d5db;
+  }
+
+  .crypto-detail__symbol {
+    color: #9ca3af;
+  }
+}

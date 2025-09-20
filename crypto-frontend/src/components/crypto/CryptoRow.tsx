@@ -31,33 +31,33 @@ export const CryptoRow: React.FC<CryptoRowProps> = ({ coin, onClick }) => {
       onClick={handleRowClick}
     >
       <td className="crypto-rank">
-        {coin.market_cap_rank}
+        {coin.market_cap_rank || 'N/A'}
       </td>
       <td className="crypto-name">
         <div className="crypto-name-container">
           <img 
-            src={coin.image} 
-            alt={coin.name}
+            src={coin.image || ''} 
+            alt={coin.name || 'Cryptocurrency'}
             className="crypto-image"
             onError={handleImageError}
           />
           <div className="crypto-name-text">
-            <span className="crypto-name-full">{coin.name}</span>
-            <span className="crypto-symbol">{coin.symbol.toUpperCase()}</span>
+            <span className="crypto-name-full">{coin.name || 'Unknown'}</span>
+            <span className="crypto-symbol">{coin.symbol?.toUpperCase() || 'N/A'}</span>
           </div>
         </div>
       </td>
       <td className="crypto-price">
-        {formatters.formatCurrency(coin.current_price)}
+        {formatters.formatCurrency(coin.current_price || 0)}
       </td>
       <td className="crypto-high">
-        {formatters.formatCurrency(coin.high_24h)}
+        {formatters.formatCurrency(coin.high_24h || 0)}
       </td>
-      <td className={`crypto-change ${coin.price_change_percentage_24h >= 0 ? 'positive' : 'negative'}`}>
-        {formatters.formatPercentage(coin.price_change_percentage_24h)}
+      <td className={`crypto-change ${(coin.price_change_percentage_24h || 0) >= 0 ? 'positive' : 'negative'}`}>
+        {formatters.formatPercentage(coin.price_change_percentage_24h || 0)}
       </td>
       <td className="crypto-market-cap">
-        {formatters.formatLargeNumber(coin.market_cap)}
+        {formatters.formatLargeNumber(coin.market_cap || 0)}
       </td>
     </tr>
   );
