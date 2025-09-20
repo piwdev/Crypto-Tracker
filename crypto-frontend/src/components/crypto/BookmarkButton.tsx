@@ -29,8 +29,7 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({
     }
 
     try {
-      const response = await bookmarkService.getUserBookmarks();
-      const isCurrentCoinBookmarked = response.data.some(coin => coin.id === coinId);
+      const isCurrentCoinBookmarked = await bookmarkService.isBookmarked(coinId);
       setIsBookmarked(isCurrentCoinBookmarked);
     } catch (err: any) {
       console.error('Error checking bookmark status:', err);

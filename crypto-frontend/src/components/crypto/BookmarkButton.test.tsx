@@ -71,9 +71,7 @@ describe('BookmarkButton', () => {
     });
 
     it('should render bookmark button when not bookmarked', async () => {
-      mockBookmarkService.getUserBookmarks.mockResolvedValue({
-        data: []
-      });
+      mockBookmarkService.isBookmarked.mockResolvedValue(false);
 
       render(<BookmarkButton coinId={mockCoinId} />);
 
@@ -87,9 +85,7 @@ describe('BookmarkButton', () => {
     });
 
     it('should render remove bookmark button when bookmarked', async () => {
-      mockBookmarkService.getUserBookmarks.mockResolvedValue({
-        data: [{ id: 'bitcoin', symbol: 'btc', name: 'Bitcoin' } as any]
-      });
+      mockBookmarkService.isBookmarked.mockResolvedValue(true);
 
       render(<BookmarkButton coinId={mockCoinId} />);
 
@@ -101,9 +97,7 @@ describe('BookmarkButton', () => {
     });
 
     it('should add bookmark when clicking bookmark button', async () => {
-      mockBookmarkService.getUserBookmarks.mockResolvedValue({
-        data: []
-      });
+      mockBookmarkService.isBookmarked.mockResolvedValue(false);
       mockBookmarkService.addBookmark.mockResolvedValue({
         data: { id: 1, user_id: 1, coin_id: mockCoinId, created_at: '' }
       });
@@ -124,9 +118,7 @@ describe('BookmarkButton', () => {
     });
 
     it('should remove bookmark when clicking remove bookmark button', async () => {
-      mockBookmarkService.getUserBookmarks.mockResolvedValue({
-        data: [{ id: 'bitcoin', symbol: 'btc', name: 'Bitcoin' } as any]
-      });
+      mockBookmarkService.isBookmarked.mockResolvedValue(true);
       mockBookmarkService.removeBookmark.mockResolvedValue();
 
       render(<BookmarkButton coinId={mockCoinId} onBookmarkChange={mockOnBookmarkChange} />);
@@ -147,9 +139,7 @@ describe('BookmarkButton', () => {
     });
 
     it('should show loading state when processing', async () => {
-      mockBookmarkService.getUserBookmarks.mockResolvedValue({
-        data: []
-      });
+      mockBookmarkService.isBookmarked.mockResolvedValue(false);
       mockBookmarkService.addBookmark.mockImplementation(() => 
         new Promise(resolve => setTimeout(resolve, 100))
       );
@@ -168,9 +158,7 @@ describe('BookmarkButton', () => {
     });
 
     it('should show error message when bookmark operation fails', async () => {
-      mockBookmarkService.getUserBookmarks.mockResolvedValue({
-        data: []
-      });
+      mockBookmarkService.isBookmarked.mockResolvedValue(false);
       mockBookmarkService.addBookmark.mockRejectedValue({
         response: { status: 500 }
       });
@@ -190,9 +178,7 @@ describe('BookmarkButton', () => {
     });
 
     it('should handle network errors appropriately', async () => {
-      mockBookmarkService.getUserBookmarks.mockResolvedValue({
-        data: []
-      });
+      mockBookmarkService.isBookmarked.mockResolvedValue(false);
       mockBookmarkService.addBookmark.mockRejectedValue({
         code: 'NETWORK_ERROR'
       });
