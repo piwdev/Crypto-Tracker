@@ -89,9 +89,27 @@ class UserLoginSerializer(serializers.Serializer):
             raise serializers.ValidationError("emailとpasswordは必須です")
 
 
+class CoinListSerializer(serializers.ModelSerializer):
+    """
+    Serializer for Coin model - used for list view with required fields only
+    """
+    class Meta:
+        model = Coin
+        fields = [
+            'id',
+            'market_cap_rank',
+            'image',
+            'name',
+            'current_price',
+            'high_24h',
+            'price_change_percentage_24h',
+            'market_cap'
+        ]
+
+
 class CoinSerializer(serializers.ModelSerializer):
     """
-    Serializer for Coin model
+    Serializer for Coin model - full detail view
     """
     class Meta:
         model = Coin
