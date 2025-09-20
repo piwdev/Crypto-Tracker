@@ -1,11 +1,27 @@
 import React from 'react';
 import { render, screen, act, waitFor } from '@testing-library/react';
 import { AuthProvider, useAuth } from './AuthContext';
-import * as authService from '../services/authService';
+import { authService } from '../services/authService';
 
 // Mock the auth service
-jest.mock('../services/authService');
-const mockedAuthService = authService as jest.Mocked<typeof authService>;
+jest.mock('../services/authService', () => ({
+  authService: {
+    login: jest.fn(),
+    logout: jest.fn(),
+    getCurrentUser: jest.fn(),
+    register: jest.fn(),
+    hasValidToken: jest.fn(),
+    getToken: jest.fn(),
+    clearToken: jest.fn(),
+    validatePassword: jest.fn(),
+    validateEmail: jest.fn(),
+    validateUsername: jest.fn(),
+  },
+}));
+
+const mockedLogin = authService.login as jest.MockedFunction<typeof authService.login>;
+const mockedLogout = authService.logout as jest.MockedFunction<typeof authService.logout>;
+const mockedGetCurrentUser = authService.getCurrentUser as jest.MockedFunction<typeof authService.getCurrentUser>;
 
 // Test component that uses the auth context
 const TestComponent: React.FC = () => {
@@ -53,7 +69,7 @@ describe('AuthContext', () => {
       last_login_at: null
     };
 
-    mockedAuthService.authService.login.mockResolvedValue({
+    mockedLogin.mockResolvedValue({
       user: mockUser,
       token: 'mock-token'
     });
@@ -72,7 +88,7 @@ describe('AuthContext', () => {
     });
 
     expect(localStorage.getItem('authToken')).toBe('mock-token');
-    expect(mockedAuthService.authService.login).toHaveBeenCalledWith({
+    expect(mockedLogin).toHaveBeenCalledWith({
       email: 'test@example.com',
       password: 'password'
     });
@@ -85,7 +101,7 @@ describe('AuthContext', () => {
       details: {}
     };
 
-    mockedAuthService.authService.login.mockRejectedValue(mockError);
+    mockedLogin.mockRejectedValue(mockError);
 
     renderWithAuthProvider(<TestComponent />);
     
@@ -113,12 +129,12 @@ describe('AuthContext', () => {
       last_login_at: null
     };
 
-    mockedAuthService.authService.login.mockResolvedValue({
+    mockedLogin.mockResolvedValue({
       user: mockUser,
       token: 'mock-token'
     });
 
-    mockedAuthService.authService.logout.mockResolvedValue();
+    mockedLogout.mockResolvedValue();
 
     renderWithAuthProvider(<TestComponent />);
     
@@ -144,7 +160,7 @@ describe('AuthContext', () => {
     });
 
     expect(localStorage.getItem('authToken')).toBeNull();
-    expect(mockedAuthService.authService.logout).toHaveBeenCalled();
+    expect(mockedLogout).toHaveBeenCalled();
   });
 
   test('restores authentication from localStorage on initialization', async () => {
@@ -159,7 +175,7 @@ describe('AuthContext', () => {
     // Set token in localStorage
     localStorage.setItem('authToken', 'existing-token');
     
-    mockedAuthService.authService.getCurrentUser.mockResolvedValue(mockUser);
+    mockedGetCurrentUser.mockResolvedValue(mockUser);
 
     renderWithAuthProvider(<TestComponent />);
 
@@ -168,14 +184,14 @@ describe('AuthContext', () => {
       expect(screen.getByTestId('user')).toHaveTextContent('User: testuser');
     });
 
-    expect(mockedAuthService.authService.getCurrentUser).toHaveBeenCalled();
+    expect(mockedGetCurrentUser).toHaveBeenCalled();
   });
 
   test('handles invalid token on initialization', async () => {
     // Set invalid token in localStorage
     localStorage.setItem('authToken', 'invalid-token');
     
-    mockedAuthService.authService.getCurrentUser.mockRejectedValue({
+    mockedGetCurrentUser.mockRejectedValue({
       message: 'Invalid token',
       status: 401
     });
