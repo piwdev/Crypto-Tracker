@@ -3,8 +3,8 @@ import { Routes, Route } from 'react-router-dom';
 import './App.css';
 import './i18n'; // i18n initialization
 
-import { Header } from './components/common';
-import { HomePage, LoginPage, CreateAccountPage, DetailPage, MyPage } from './pages';
+import { Header, ProtectedRoute, AuthRedirect } from './components/common';
+import { HomePage, LoginPage, CreateAccountPage, DetailPage, MyPage, NotFoundPage } from './pages';
 
 function App() {
 
@@ -14,11 +14,31 @@ function App() {
       
       <main className="App-main">
         <Routes>
+          {/* Public routes */}
           <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/createaccount" element={<CreateAccountPage />} />
-          <Route path="/mypage" element={<MyPage />} />
           <Route path="/detail/:coinId" element={<DetailPage />} />
+          
+          {/* Auth routes - redirect authenticated users */}
+          <Route path="/login" element={
+            <AuthRedirect>
+              <LoginPage />
+            </AuthRedirect>
+          } />
+          <Route path="/createaccount" element={
+            <AuthRedirect>
+              <CreateAccountPage />
+            </AuthRedirect>
+          } />
+          
+          {/* Protected routes - require authentication */}
+          <Route path="/mypage" element={
+            <ProtectedRoute>
+              <MyPage />
+            </ProtectedRoute>
+          } />
+          
+          {/* 404 Not Found */}
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
     </div>

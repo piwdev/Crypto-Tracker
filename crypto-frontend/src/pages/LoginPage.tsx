@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { LoginForm } from '../components/auth/LoginForm';
 
@@ -13,13 +13,17 @@ import { LoginForm } from '../components/auth/LoginForm';
 export const LoginPage: React.FC = () => {
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
-  // 既にログイン済みの場合はホームページにリダイレクト
+  // ProtectedRouteから渡された元のパスを取得
+  const from = (location.state as any)?.from?.pathname || '/';
+
+  // 既にログイン済みの場合は元のページまたはホームページにリダイレクト
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/', { replace: true });
+      navigate(from, { replace: true });
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, navigate, from]);
 
   // ログイン済みの場合は何も表示しない（リダイレクト中）
   if (isAuthenticated) {

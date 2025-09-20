@@ -97,5 +97,10 @@
     "forbidden": "You don't have permission to access this resource",
     "validationError": "Please check your input",
     "unknownError": "An unknown error occurred"
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "message": "The page you are looking for doesn't exist or has been moved.",
+    "backToHome": "Back to Home"
   }
 }
