@@ -24,7 +24,13 @@ describe('bookmarkService', () => {
         message: 'Bookmark added successfully'
       };
 
-      mockedApi.post.mockResolvedValue({ data: mockResponse });
+      mockedApi.post.mockResolvedValue({ 
+      data: mockResponse,
+      status: 201,
+      statusText: 'Created',
+      headers: {},
+      config: { headers: {} as any }
+    });
 
       const result = await bookmarkService.addBookmark(coinId);
 
@@ -66,7 +72,13 @@ describe('bookmarkService', () => {
     it('should remove a bookmark successfully', async () => {
       const coinId = 'bitcoin';
 
-      mockedApi.delete.mockResolvedValue({ data: null });
+      mockedApi.delete.mockResolvedValue({ 
+        data: null,
+        status: 204,
+        statusText: 'No Content',
+        headers: {},
+        config: { headers: {} as any }
+      });
 
       await bookmarkService.removeBookmark(coinId);
 
@@ -141,7 +153,13 @@ describe('bookmarkService', () => {
         message: 'Bookmarks retrieved successfully'
       };
 
-      mockedApi.get.mockResolvedValue({ data: mockResponse });
+      mockedApi.get.mockResolvedValue({ 
+        data: mockResponse,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: { headers: {} as any }
+      });
 
       const result = await bookmarkService.getUserBookmarks();
 
@@ -169,7 +187,13 @@ describe('bookmarkService', () => {
         message: 'No bookmarks found'
       };
 
-      mockedApi.get.mockResolvedValue({ data: mockResponse });
+      mockedApi.get.mockResolvedValue({ 
+        data: mockResponse,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: { headers: {} as any }
+      });
 
       const result = await bookmarkService.getUserBookmarks();
 
@@ -216,7 +240,13 @@ describe('bookmarkService', () => {
         ]
       };
 
-      mockedApi.get.mockResolvedValue({ data: mockResponse });
+      mockedApi.get.mockResolvedValue({ 
+        data: mockResponse,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: { headers: {} as any }
+      });
 
       const result = await bookmarkService.isBookmarked(coinId);
 
@@ -261,7 +291,13 @@ describe('bookmarkService', () => {
         ]
       };
 
-      mockedApi.get.mockResolvedValue({ data: mockResponse });
+      mockedApi.get.mockResolvedValue({ 
+        data: mockResponse,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: { headers: {} as any }
+      });
 
       const result = await bookmarkService.isBookmarked(coinId);
 
@@ -313,7 +349,11 @@ describe('bookmarkService', () => {
       mockedApi.post.mockResolvedValue({ 
         data: { 
           data: { id: 1, user_id: 1, coin_id: coinId, created_at: '2023-01-01T00:00:00Z' } 
-        } 
+        },
+        status: 201,
+        statusText: 'Created',
+        headers: {},
+        config: { headers: {} as any }
       });
 
       await bookmarkService.addBookmark(coinId);

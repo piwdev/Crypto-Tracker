@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { MyPage } from './MyPage';
+import { MyPage } from '../pages/MyPage';
 import '../i18n';
 
 // Mock the CryptoTable component to avoid react-router-dom issues

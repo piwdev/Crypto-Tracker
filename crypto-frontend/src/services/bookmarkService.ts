@@ -16,7 +16,10 @@ export const bookmarkService = {
     }
 
     try {
-      const response = await api.post('/bookmarks/', { coin_id: coinId });
+      const response = await api.postWithRetry('/bookmarks/', { coin_id: coinId }, undefined, {
+        retries: 2,
+        retryCondition: (error) => !error.response || error.response.status >= 500
+      });
       return response.data;
     } catch (error: any) {
       // エラーログ出力（デバッグ用）
@@ -41,7 +44,10 @@ export const bookmarkService = {
     }
 
     try {
-      await api.delete(`/bookmarks/${coinId}/`);
+      await api.deleteWithRetry(`/bookmarks/${coinId}/`, undefined, {
+        retries: 2,
+        retryCondition: (error) => !error.response || error.response.status >= 500
+      });
     } catch (error: any) {
       // エラーログ出力（デバッグ用）
       console.error('Failed to remove bookmark:', error);
@@ -60,7 +66,10 @@ export const bookmarkService = {
    */
   getUserBookmarks: async (): Promise<CoinListResponse> => {
     try {
-      const response = await api.get('/user/bookmarks/');
+      const response = await api.getWithRetry('/user/bookmarks/', undefined, {
+        retries: 3,
+        retryCondition: (error) => !error.response || error.response.status >= 500
+      });
       return response.data;
     } catch (error: any) {
       // エラーログ出力（デバッグ用）

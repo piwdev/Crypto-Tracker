@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { I18nextProvider } from 'react-i18next';
-import i18n from '../../i18n';
-import LoadingSpinner from './LoadingSpinner';
+import i18n from '../i18n/index';
+import LoadingSpinner from '../components/common/LoadingSpinner';
 
 // Mock i18n for testing
 const renderWithI18n = (component: React.ReactElement) => {

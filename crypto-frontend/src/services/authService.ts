@@ -20,7 +20,10 @@ export const authService = {
         throw new ApiError('メールアドレスとパスワードを入力してください', 400);
       }
 
-      const response = await api.post('/auth/login/', credentials);
+      const response = await api.postWithRetry('/auth/login/', credentials, undefined, {
+        retries: 2,
+        retryCondition: (error) => error.response?.status >= 500
+      });
       
       // レスポンスの検証
       if (!response.data || !response.data.user) {
@@ -77,7 +80,10 @@ export const authService = {
         throw new ApiError('ユーザー名は英字または日本語1-20文字で入力してください', 400);
       }
 
-      const response = await api.post('/auth/register/', userData);
+      const response = await api.postWithRetry('/auth/register/', userData, undefined, {
+        retries: 2,
+        retryCondition: (error) => error.response?.status >= 500
+      });
       
       // レスポンスの検証
       if (!response.data || !response.data.user) {
@@ -130,7 +136,10 @@ export const authService = {
    */
   getCurrentUser: async (): Promise<User> => {
     try {
-      const response = await api.get('/auth/user/');
+      const response = await api.getWithRetry('/auth/user/', undefined, {
+        retries: 2,
+        retryCondition: (error) => error.response?.status >= 500
+      });
       
       // レスポンスの検証
       if (!response.data) {

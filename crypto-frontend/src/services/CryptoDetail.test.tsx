@@ -1,11 +1,11 @@
 import React from 'react';
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
-import CryptoDetail from './CryptoDetail';
-import { cryptoService } from '../../services/cryptoService';
-import { Coin } from '../../types/crypto';
+import CryptoDetail from '../components/crypto/CryptoDetail';
+import { cryptoService } from './cryptoService';
+import { Coin } from '../types/crypto';
 
 // Mock the crypto service
-jest.mock('../../services/cryptoService');
+jest.mock('./cryptoService');
 const mockCryptoService = cryptoService as jest.Mocked<typeof cryptoService>;
 
 // Mock the BookmarkButton component

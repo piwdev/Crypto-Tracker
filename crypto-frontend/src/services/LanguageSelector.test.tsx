@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { useTranslation } from 'react-i18next';
-import LanguageSelector from './LanguageSelector';
-import { SUPPORTED_LANGUAGES } from '../../utils/constants';
+import LanguageSelector from '../components/common/LanguageSelector';
+import { SUPPORTED_LANGUAGES } from '../utils/constants';
 
 // Mock react-i18next
 jest.mock('react-i18next', () => ({

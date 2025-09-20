@@ -29,7 +29,13 @@ describe('cryptoService', () => {
         }
       };
 
-      mockedApi.get.mockResolvedValue(mockResponse);
+      mockedApi.get.mockResolvedValue({
+        ...mockResponse,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: { headers: {} as any }
+      });
 
       const result = await cryptoService.getCoinList();
 
@@ -42,7 +48,13 @@ describe('cryptoService', () => {
         data: null
       };
 
-      mockedApi.get.mockResolvedValue(mockResponse);
+      mockedApi.get.mockResolvedValue({
+        ...mockResponse,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: { headers: {} as any }
+      });
 
       await expect(cryptoService.getCoinList()).rejects.toThrow(ApiError);
       await expect(cryptoService.getCoinList()).rejects.toThrow('Invalid response format from server');
@@ -55,7 +67,13 @@ describe('cryptoService', () => {
         }
       };
 
-      mockedApi.get.mockResolvedValue(mockResponse);
+      mockedApi.get.mockResolvedValue({
+        ...mockResponse,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: { headers: {} as any }
+      });
 
       await expect(cryptoService.getCoinList()).rejects.toThrow(ApiError);
       await expect(cryptoService.getCoinList()).rejects.toThrow('Expected array of coins but received different format');
@@ -97,7 +115,13 @@ describe('cryptoService', () => {
         }
       };
 
-      mockedApi.get.mockResolvedValue(mockResponse);
+      mockedApi.get.mockResolvedValue({
+        ...mockResponse,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: { headers: {} as any }
+      });
 
       const result = await cryptoService.getCoinDetail('bitcoin');
 
@@ -131,7 +155,13 @@ describe('cryptoService', () => {
         data: null
       };
 
-      mockedApi.get.mockResolvedValue(mockResponse);
+      mockedApi.get.mockResolvedValue({
+        ...mockResponse,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: { headers: {} as any }
+      });
 
       await expect(cryptoService.getCoinDetail('bitcoin')).rejects.toThrow(ApiError);
       await expect(cryptoService.getCoinDetail('bitcoin')).rejects.toThrow('Invalid response format from server');
@@ -147,7 +177,13 @@ describe('cryptoService', () => {
         }
       };
 
-      mockedApi.get.mockResolvedValue(mockResponse);
+      mockedApi.get.mockResolvedValue({
+        ...mockResponse,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: { headers: {} as any }
+      });
 
       await expect(cryptoService.getCoinDetail('bitcoin')).rejects.toThrow(ApiError);
       await expect(cryptoService.getCoinDetail('bitcoin')).rejects.toThrow('Incomplete coin data received from server');
@@ -164,7 +200,13 @@ describe('cryptoService', () => {
         }
       };
 
-      mockedApi.get.mockResolvedValue(mockResponse);
+      mockedApi.get.mockResolvedValue({
+        ...mockResponse,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: { headers: {} as any }
+      });
 
       await cryptoService.getCoinDetail('coin with spaces');
 
@@ -174,7 +216,13 @@ describe('cryptoService', () => {
 
   describe('healthCheck', () => {
     it('should return true when health check succeeds', async () => {
-      mockedApi.get.mockResolvedValue({ status: 200 });
+      mockedApi.get.mockResolvedValue({ 
+      data: {},
+      status: 200,
+      statusText: 'OK',
+      headers: {},
+      config: { headers: {} as any }
+    });
 
       const result = await cryptoService.healthCheck();
 

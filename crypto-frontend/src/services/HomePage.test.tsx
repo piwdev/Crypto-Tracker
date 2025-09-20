@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
-import { HomePage } from './HomePage';
-import { cryptoService } from '../services/cryptoService';
+import { HomePage } from '../pages/HomePage';
+import { cryptoService } from './cryptoService';
 import '../i18n'; // Import i18n configuration
 
 // Mock the crypto service

@@ -44,7 +44,13 @@ describe('authService', () => {
     };
 
     it('should successfully login with valid credentials', async () => {
-      mockedApi.post.mockResolvedValue({ data: mockAuthResponse });
+      mockedApi.post.mockResolvedValue({ 
+        data: mockAuthResponse,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: { headers: {} as any }
+      });
 
       const result = await authService.login(validCredentials);
 
@@ -106,7 +112,13 @@ describe('authService', () => {
     });
 
     it('should throw ApiError when response data is invalid', async () => {
-      mockedApi.post.mockResolvedValue({ data: null });
+      mockedApi.post.mockResolvedValue({ 
+        data: null,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: { headers: {} as any }
+      });
 
       await expect(authService.login(validCredentials)).rejects.toThrow(
         new ApiError('ログインレスポンスが無効です', 500)
@@ -133,7 +145,13 @@ describe('authService', () => {
     };
 
     it('should successfully register with valid data', async () => {
-      mockedApi.post.mockResolvedValue({ data: mockAuthResponse });
+      mockedApi.post.mockResolvedValue({ 
+        data: mockAuthResponse,
+        status: 201,
+        statusText: 'Created',
+        headers: {},
+        config: { headers: {} as any }
+      });
 
       const result = await authService.register(validUserData);
 
@@ -183,7 +201,13 @@ describe('authService', () => {
 
     it('should accept Japanese username', async () => {
       const validDataWithJapanese = { ...validUserData, username: 'テストユーザー' };
-      mockedApi.post.mockResolvedValue({ data: mockAuthResponse });
+      mockedApi.post.mockResolvedValue({ 
+        data: mockAuthResponse,
+        status: 201,
+        statusText: 'Created',
+        headers: {},
+        config: { headers: {} as any }
+      });
 
       const result = await authService.register(validDataWithJapanese);
 
@@ -204,7 +228,13 @@ describe('authService', () => {
 
   describe('logout', () => {
     it('should successfully logout and clear token', async () => {
-      mockedApi.post.mockResolvedValue({});
+      mockedApi.post.mockResolvedValue({
+        data: {},
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: { headers: {} as any }
+      });
 
       await authService.logout();
 
@@ -235,7 +265,13 @@ describe('authService', () => {
     };
 
     it('should successfully get current user', async () => {
-      mockedApi.get.mockResolvedValue({ data: mockUser });
+      mockedApi.get.mockResolvedValue({ 
+        data: mockUser,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: { headers: {} as any }
+      });
 
       const result = await authService.getCurrentUser();
 
@@ -244,7 +280,13 @@ describe('authService', () => {
     });
 
     it('should throw ApiError when response data is null', async () => {
-      mockedApi.get.mockResolvedValue({ data: null });
+      mockedApi.get.mockResolvedValue({ 
+        data: null,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: { headers: {} as any }
+      });
 
       await expect(authService.getCurrentUser()).rejects.toThrow(
         new ApiError('ユーザー情報が取得できませんでした', 500)

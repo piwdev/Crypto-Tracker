@@ -1,4 +1,4 @@
-import i18n from './index';
+import i18n from '../i18n/index';
 
 describe('i18n Configuration', () => {
   test('should initialize correctly', () => {

@@ -7,7 +7,10 @@ export const cryptoService = {
   // 要件 1.1: market_cap_rank 1-10の暗号通貨を表示
   getCoinList: async (): Promise<CoinListResponse> => {
     try {
-      const response = await api.get('/coins/');
+      const response = await api.getWithRetry('/coins/', undefined, {
+        retries: 3,
+        retryCondition: (error) => !error.response || error.response.status >= 500
+      });
       
       // レスポンスデータの検証
       if (!response.data || !response.data.data) {
@@ -58,7 +61,10 @@ export const cryptoService = {
         throw new ApiError('有効なコインIDを指定してください。', 400);
       }
 
-      const response = await api.get(`/coins/${encodeURIComponent(coinId.trim())}/`);
+      const response = await api.getWithRetry(`/coins/${encodeURIComponent(coinId.trim())}/`, undefined, {
+        retries: 3,
+        retryCondition: (error) => !error.response || error.response.status >= 500
+      });
       
       // レスポンスデータの検証
       if (!response.data || !response.data.data) {

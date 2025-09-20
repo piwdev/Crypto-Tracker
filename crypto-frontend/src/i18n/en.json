@@ -9,7 +9,9 @@
     "save": "Save",
     "delete": "Delete",
     "edit": "Edit",
-    "close": "Close"
+    "close": "Close",
+    "reload": "Reload Page",
+    "showDetails": "Show Error Details"
   },
   "navigation": {
     "home": "Home",
@@ -38,7 +40,16 @@
     "emailExists": "This email is already registered",
     "invalidCredentials": "Invalid email or password",
     "emailNotFound": "Email not found",
-    "incorrectPassword": "Incorrect password"
+    "incorrectPassword": "Incorrect password",
+    "emailTooLong": "Email address is too long",
+    "emailSuspiciousChars": "Email contains unusual characters",
+    "passwordTooShort": "Password is too short",
+    "passwordTooLong": "Password is too long",
+    "passwordNoLetters": "Password should contain letters",
+    "passwordNoNumbers": "Password should contain numbers",
+    "passwordRecommendLonger": "Consider using a longer password",
+    "usernameTooLong": "Username is too long",
+    "usernameRecommendLonger": "Consider using a longer username"
   },
   "crypto": {
     "rank": "Rank",
@@ -96,7 +107,21 @@
     "unauthorized": "You need to login to access this page",
     "forbidden": "You don't have permission to access this resource",
     "validationError": "Please check your input",
-    "unknownError": "An unknown error occurred"
+    "unknownError": "An unknown error occurred",
+    "unexpectedError": "Something went wrong",
+    "applicationError": "An unexpected error occurred in the application"
+  },
+  "network": {
+    "offline": "No internet connection",
+    "reconnecting": "Reconnecting...",
+    "backOnline": "Back online"
+  },
+  "validation": {
+    "required": "This field is required",
+    "minLength": "This field is too short",
+    "maxLength": "This field is too long",
+    "pattern": "Invalid format",
+    "error": "Validation error"
   },
   "notFound": {
     "title": "Page Not Found",

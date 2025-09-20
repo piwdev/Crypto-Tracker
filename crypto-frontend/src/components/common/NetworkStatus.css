@@ -1,0 +1,90 @@
+.network-status {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10000;
+  padding: 12px 16px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: white;
+  transition: all 0.3s ease;
+  transform: translateY(-100%);
+}
+
+.network-status.network-status--offline {
+  background-color: #dc3545;
+  transform: translateY(0);
+}
+
+.network-status.network-status--reconnecting {
+  background-color: #ffc107;
+  color: #212529;
+  transform: translateY(0);
+}
+
+.network-status.network-status--online {
+  background-color: #28a745;
+  transform: translateY(0);
+  animation: slideDown 0.3s ease-out;
+}
+
+.network-status__content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.network-status__icon {
+  font-size: 16px;
+}
+
+.network-status__message {
+  flex: 1;
+  text-align: center;
+}
+
+.network-status__retry {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: inherit;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.network-status__retry:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 768px) {
+  .network-status {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+  
+  .network-status__content {
+    gap: 6px;
+  }
+  
+  .network-status__retry {
+    padding: 3px 8px;
+    font-size: 11px;
+  }
+}

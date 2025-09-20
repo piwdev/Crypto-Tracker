@@ -1,11 +1,11 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { useAuth } from '../../contexts/AuthContext';
-import { bookmarkService } from '../../services/bookmarkService';
-import BookmarkButton from './BookmarkButton';
+import { useAuth } from '../contexts/AuthContext';
+import { bookmarkService } from './bookmarkService';
+import BookmarkButton from '../components/crypto/BookmarkButton';
 
 // Mock dependencies
-jest.mock('../../contexts/AuthContext');
+jest.mock('../contexts/AuthContext');
 jest.mock('../../services/bookmarkService');
 jest.mock('react-i18next', () => ({
   useTranslation: () => ({

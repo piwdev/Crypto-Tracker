@@ -9,7 +9,9 @@
     "save": "保存",
     "delete": "削除",
     "edit": "編集",
-    "close": "閉じる"
+    "close": "閉じる",
+    "reload": "ページを再読み込み",
+    "showDetails": "エラー詳細を表示"
   },
   "navigation": {
     "home": "ホーム",
@@ -38,7 +40,16 @@
     "emailExists": "既に登録されているメールアドレスです",
     "invalidCredentials": "メールアドレスまたはパスワードが正しくありません",
     "emailNotFound": "存在しないメールアドレスです",
-    "incorrectPassword": "パスワードが正しくありません"
+    "incorrectPassword": "パスワードが正しくありません",
+    "emailTooLong": "メールアドレスが長すぎます",
+    "emailSuspiciousChars": "メールアドレスに不適切な文字が含まれています",
+    "passwordTooShort": "パスワードが短すぎます",
+    "passwordTooLong": "パスワードが長すぎます",
+    "passwordNoLetters": "パスワードに文字を含めてください",
+    "passwordNoNumbers": "パスワードに数字を含めてください",
+    "passwordRecommendLonger": "より長いパスワードの使用をお勧めします",
+    "usernameTooLong": "ユーザー名が長すぎます",
+    "usernameRecommendLonger": "より長いユーザー名の使用をお勧めします"
   },
   "crypto": {
     "rank": "順位",
@@ -96,7 +107,21 @@
     "unauthorized": "このページにアクセスするにはログインが必要です",
     "forbidden": "このリソースにアクセスする権限がありません",
     "validationError": "入力内容を確認してください",
-    "unknownError": "不明なエラーが発生しました"
+    "unknownError": "不明なエラーが発生しました",
+    "unexpectedError": "予期しないエラーが発生しました",
+    "applicationError": "アプリケーションで予期しないエラーが発生しました"
+  },
+  "network": {
+    "offline": "インターネット接続がありません",
+    "reconnecting": "再接続中...",
+    "backOnline": "オンラインに復帰しました"
+  },
+  "validation": {
+    "required": "この項目は必須です",
+    "minLength": "入力が短すぎます",
+    "maxLength": "入力が長すぎます",
+    "pattern": "形式が正しくありません",
+    "error": "バリデーションエラー"
   },
   "notFound": {
     "title": "ページが見つかりません",
