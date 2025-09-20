@@ -33,16 +33,19 @@ api.interceptors.response.use(
     return response;
   },
   (error) => {
-    const apiError: ApiError = {
-      message: error.response?.data?.error || error.message || 'An error occurred',
-      status: error.response?.status || 500,
-      details: error.response?.data,
-    };
+    const message = error.response?.data?.error || error.message || 'An error occurred';
+    const status = error.response?.status || 500;
+    const details = error.response?.data;
+
+    const apiError = new ApiError(message, status, details);
 
     // 401エラーの場合、認証トークンを削除してログインページにリダイレクト
     if (error.response?.status === 401) {
       localStorage.removeItem('authToken');
-      window.location.href = '/login';
+      // ログインページにリダイレクトする前に、現在のページがログインページでないことを確認
+      if (window.location.pathname !== '/login') {
+        window.location.href = '/login';
+      }
     }
 
     return Promise.reject(apiError);

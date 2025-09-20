@@ -1,3 +1,3 @@
 // Context exports
-// These will be implemented in later tasks
-export {};
+export { AuthProvider, useAuth } from './AuthContext';
+export { default as AuthContext } from './AuthContext';
