@@ -9,19 +9,9 @@ from .settings import *
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': ':memory:',
+        'NAME': 'test_db.sqlite3',
     }
 }
-
-# Disable migrations for faster testing
-class DisableMigrations:
-    def __contains__(self, item):
-        return True
-    
-    def __getitem__(self, item):
-        return None
-
-MIGRATION_MODULES = DisableMigrations()
 
 # Faster password hashing for tests
 PASSWORD_HASHERS = [
