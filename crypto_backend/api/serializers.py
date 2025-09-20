@@ -125,3 +125,43 @@ class BookmarkSerializer(serializers.ModelSerializer):
     class Meta:
         model = Bookmark
         fields = ('id', 'coin', 'created_at')
+
+
+class BookmarkCreateSerializer(serializers.Serializer):
+    """
+    Serializer for creating bookmarks
+    """
+    coin_id = serializers.CharField(max_length=50)
+    
+    def validate_coin_id(self, value):
+        """
+        Validate that the coin exists
+        """
+        try:
+            Coin.objects.get(id=value)
+        except Coin.DoesNotExist:
+            raise serializers.ValidationError("指定されたコインが見つかりません")
+        return value
+    
+    def validate(self, attrs):
+        """
+        Validate that the bookmark doesn't already exist for this user
+        """
+        user = self.context['request'].user
+        coin_id = attrs['coin_id']
+        
+        if Bookmark.objects.filter(user=user, coin_id=coin_id).exists():
+            raise serializers.ValidationError("このコインは既にブックマークされています")
+        
+        return attrs
+    
+    def create(self, validated_data):
+        """
+        Create a new bookmark
+        """
+        user = self.context['request'].user
+        coin_id = validated_data['coin_id']
+        coin = Coin.objects.get(id=coin_id)
+        
+        bookmark = Bookmark.objects.create(user=user, coin=coin)
+        return bookmark
