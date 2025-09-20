@@ -1,0 +1,82 @@
+.crypto-table-container {
+  width: 100%;
+  overflow-x: auto;
+  margin: 20px 0;
+}
+
+.crypto-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.crypto-table thead {
+  background-color: #f8f9fa;
+}
+
+.crypto-table th {
+  padding: 16px 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #495057;
+  border-bottom: 2px solid #dee2e6;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.crypto-table td {
+  padding: 16px 12px;
+  vertical-align: middle;
+  font-size: 14px;
+}
+
+.crypto-table-loading,
+.crypto-table-error,
+.crypto-table-empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  text-align: center;
+  color: #6c757d;
+  font-size: 16px;
+}
+
+.crypto-table-error {
+  color: #dc3545;
+}
+
+/* Responsive design for mobile */
+@media (max-width: 768px) {
+  .crypto-table-container {
+    margin: 10px 0;
+  }
+
+  .crypto-table {
+    font-size: 12px;
+  }
+
+  .crypto-table th {
+    padding: 12px 8px;
+  }
+
+  /* Hide some columns on mobile to save space */
+  .crypto-table th:nth-child(4) {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .crypto-table th {
+    padding: 10px 6px;
+  }
+
+  /* Hide market cap column on very small screens */
+  .crypto-table th:nth-child(6) {
+    display: none;
+  }
+}

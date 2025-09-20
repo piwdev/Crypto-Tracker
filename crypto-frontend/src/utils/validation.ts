@@ -14,7 +14,7 @@ export const validation = {
 
   // ユーザー名の検証（アルファベットまたは日本語文字、1-20文字）
   isValidUsername: (username: string): boolean => {
-    const usernameRegex = /^[a-zA-Zひらがなカタカナ漢字]{1,20}$/;
+    const usernameRegex = /^[a-zA-Zあ-んア-ンー一-龯ぁ-ゔゞ゠-ヾ]{1,20}$/;
     return usernameRegex.test(username);
   },
 

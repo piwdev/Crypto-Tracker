@@ -1,3 +1,3 @@
 // Crypto components exports
-// These will be implemented in later tasks
-export {};
+export { CryptoTable } from './CryptoTable';
+export { CryptoRow } from './CryptoRow';

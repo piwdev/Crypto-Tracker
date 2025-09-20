@@ -1,3 +1,3 @@
 // Pages exports
-// These will be implemented in later tasks
-export {};
+export { LoginPage } from './LoginPage';
+export { CreateAccountPage } from './CreateAccountPage';

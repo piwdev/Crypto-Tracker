@@ -4,6 +4,7 @@ import './App.css';
 import './i18n'; // i18n initialization
 import { useAuth } from './contexts';
 import { Header } from './components/common';
+import { LoginPage, CreateAccountPage } from './pages';
 
 function App() {
   const { user, isAuthenticated, loading } = useAuth();
@@ -36,9 +37,10 @@ function App() {
               </div>
             </div>
           } />
-          <Route path="/login" element={<div>Login Page (Coming Soon)</div>} />
-          <Route path="/createaccount" element={<div>Create Account Page (Coming Soon)</div>} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/createaccount" element={<CreateAccountPage />} />
           <Route path="/mypage" element={<div>My Page (Coming Soon)</div>} />
+          <Route path="/detail/:coinId" element={<div>Crypto Detail Page (Coming Soon)</div>} />
         </Routes>
       </main>
     </div>
