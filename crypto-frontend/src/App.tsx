@@ -4,7 +4,7 @@ import './App.css';
 import './i18n'; // i18n initialization
 
 import { Header } from './components/common';
-import { HomePage, LoginPage, CreateAccountPage, DetailPage } from './pages';
+import { HomePage, LoginPage, CreateAccountPage, DetailPage, MyPage } from './pages';
 
 function App() {
 
@@ -17,7 +17,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/createaccount" element={<CreateAccountPage />} />
-          <Route path="/mypage" element={<div>My Page (Coming Soon)</div>} />
+          <Route path="/mypage" element={<MyPage />} />
           <Route path="/detail/:coinId" element={<DetailPage />} />
         </Routes>
       </main>

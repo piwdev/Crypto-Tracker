@@ -1,0 +1,158 @@
+.mypage-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: calc(100vh - 80px);
+}
+
+.mypage-header {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.mypage-header h1 {
+  color: #333;
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.mypage-content {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.mypage-error {
+  text-align: center;
+  padding: 40px 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+}
+
+.mypage-error p {
+  color: #dc3545;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* User Information Section */
+.user-info-section {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e9ecef;
+}
+
+.user-info-section h2 {
+  color: #495057;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 20px 0;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #007bff;
+}
+
+.user-info-card {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.user-info-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #f1f3f4;
+}
+
+.user-info-item:last-child {
+  border-bottom: none;
+}
+
+.user-info-item label {
+  font-weight: 600;
+  color: #495057;
+  min-width: 120px;
+  margin-right: 15px;
+}
+
+.user-info-item span {
+  color: #6c757d;
+  font-size: 1rem;
+}
+
+/* Bookmarks Section */
+.bookmarks-section {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e9ecef;
+}
+
+.bookmarks-section h2 {
+  color: #495057;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 20px 0;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #28a745;
+}
+
+.bookmarks-content {
+  margin-top: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .mypage-container {
+    padding: 15px;
+  }
+
+  .mypage-header h1 {
+    font-size: 2rem;
+  }
+
+  .mypage-content {
+    gap: 25px;
+  }
+
+  .user-info-section,
+  .bookmarks-section {
+    padding: 20px;
+  }
+
+  .user-info-section h2,
+  .bookmarks-section h2 {
+    font-size: 1.3rem;
+  }
+
+  .user-info-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .user-info-item label {
+    min-width: auto;
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .mypage-container {
+    padding: 10px;
+  }
+
+  .mypage-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .user-info-section,
+  .bookmarks-section {
+    padding: 15px;
+  }
+}
