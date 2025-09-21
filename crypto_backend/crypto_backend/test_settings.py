@@ -1,22 +1,41 @@
 """
 Test settings for crypto_backend project.
-Uses SQLite for testing to avoid PostgreSQL dependency.
 """
 
 from .settings import *
 
-# Use SQLite for testing
+# Use in-memory SQLite for faster tests
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'test_db.sqlite3',
+        'NAME': ':memory:',
     }
 }
+
+# Disable migrations for faster tests
+class DisableMigrations:
+    def __contains__(self, item):
+        return True
+    
+    def __getitem__(self, item):
+        return None
+
+MIGRATION_MODULES = DisableMigrations()
 
 # Faster password hashing for tests
 PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.MD5PasswordHasher',
 ]
 
-# Allow testserver for manual testing
-ALLOWED_HOSTS = ['testserver', 'localhost', '127.0.0.1']
+# Disable logging during tests
+LOGGING_CONFIG = None
+
+# Use local memory cache
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    }
+}
+
+# Disable CORS checks in tests
+CORS_ALLOW_ALL_ORIGINS = True

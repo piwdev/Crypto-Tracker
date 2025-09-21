@@ -10,6 +10,8 @@ jobs:
   deploy-backend:
     runs-on: ubuntu-latest
     
+
+    
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -27,7 +29,7 @@ jobs:
     - name: Run tests
       working-directory: crypto_backend
       run: |
-        python manage.py test
+        python manage.py test --settings=crypto_backend.test_settings
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v4
@@ -40,21 +42,16 @@ jobs:
       run: |
         pip install awsebcli
 
-    - name: Create application version
-      working-directory: crypto_backend
-      run: |
-        # Create application version
-        zip -r ../deploy.zip . -x "*.git*" "*__pycache__*" "*.pyc" "*venv*"
-        aws s3 cp ../deploy.zip s3://${{ secrets.EB_BUCKET_NAME }}/deploy-$(date +%Y%m%d-%H%M%S).zip
-        
+
     - name: Deploy to Elastic Beanstalk
       working-directory: crypto_backend
       run: |
-        # Check if environment exists, if not create it
-        if ! eb status ${{ secrets.EB_ENVIRONMENT_NAME }} 2>/dev/null; then
-          echo "Environment doesn't exist, creating..."
-          eb create ${{ secrets.EB_ENVIRONMENT_NAME }} --instance-types t3.micro --database.engine postgres --database.instance db.t3.micro --database.username cryptouser
-        else
-          echo "Environment exists, deploying..."
-          eb deploy ${{ secrets.EB_ENVIRONMENT_NAME }}
+        # Initialize EB if not already initialized
+        if [ ! -f .elasticbeanstalk/config.yml ]; then
+          echo "Initializing EB application..."
+          eb init crypto-tracker-api --region ap-northeast-1 --platform python-3.11
         fi
+        
+        # Deploy to existing environment
+        echo "Deploying to environment..."
+        eb deploy ${{ secrets.EB_ENVIRONMENT_NAME }}
