@@ -47,11 +47,17 @@ jobs:
     - name: Deploy to Elastic Beanstalk
       working-directory: crypto_backend
       run: |
-        # Initialize EB if not already initialized
-        if [ ! -f .elasticbeanstalk/config.yml ]; then
-          echo "Initializing EB application..."
-          eb init crypto-tracker-api --region ap-northeast-1 --platform python-3.11
-        fi
+        # Use existing application without eb init
+        export AWS_DEFAULT_REGION=ap-northeast-1
+        
+        # Create minimal EB config
+        mkdir -p .elasticbeanstalk
+        echo "branch-defaults:" > .elasticbeanstalk/config.yml
+        echo "  main:" >> .elasticbeanstalk/config.yml
+        echo "    environment: ${{ secrets.EB_ENVIRONMENT_NAME }}" >> .elasticbeanstalk/config.yml
+        echo "global:" >> .elasticbeanstalk/config.yml
+        echo "  application_name: crypto-tracker-api" >> .elasticbeanstalk/config.yml
+        echo "  default_region: ap-northeast-1" >> .elasticbeanstalk/config.yml
         
         # Deploy to existing environment
         echo "Deploying to environment..."
