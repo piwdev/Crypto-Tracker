@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Coin } from '../../types/crypto';
 import { CryptoRow } from './CryptoRow';
@@ -10,12 +10,18 @@ interface CryptoTableProps {
   error?: string | null;
 }
 
-export const CryptoTable: React.FC<CryptoTableProps> = ({ 
+export const CryptoTable: React.FC<CryptoTableProps> = React.memo(({ 
   coins, 
   loading = false, 
   error = null 
 }) => {
   const { t } = useTranslation();
+
+  const memoizedRows = useMemo(() => 
+    coins.map((coin) => (
+      <CryptoRow key={coin.id} coin={coin} />
+    )), [coins]
+  );
 
   if (loading) {
     return (
@@ -55,11 +61,9 @@ export const CryptoTable: React.FC<CryptoTableProps> = ({
           </tr>
         </thead>
         <tbody>
-          {coins.map((coin) => (
-            <CryptoRow key={coin.id} coin={coin} />
-          ))}
+          {memoizedRows}
         </tbody>
       </table>
     </div>
   );
-};
+});

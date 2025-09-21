@@ -1,10 +1,10 @@
 // 認証関連の型定義
 export interface User {
   id: number;
-  username: string;
+  name: string;  // Backend uses 'name' not 'username'
   email: string;
-  created_at: string;
-  last_login_at: string | null;
+  created_at?: string;
+  last_login_at?: string | null;
 }
 
 export interface LoginRequest {

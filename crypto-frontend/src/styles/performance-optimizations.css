@@ -1,0 +1,127 @@
+/* Performance optimization CSS */
+
+/* Enable hardware acceleration for smooth animations */
+.crypto-row,
+.bookmark-button,
+.language-selector__dropdown {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Optimize image rendering */
+.crypto-image,
+.crypto-detail__image {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+/* Reduce layout thrashing with contain property */
+.crypto-table-container {
+  contain: layout style paint;
+}
+
+.crypto-row {
+  contain: layout style;
+}
+
+/* Optimize scrolling performance */
+.crypto-table {
+  overflow-anchor: none;
+}
+
+/* Prevent unnecessary repaints */
+.bookmark-button__icon {
+  contain: strict;
+}
+
+/* Optimize font rendering */
+body {
+  font-display: swap;
+  text-rendering: optimizeSpeed;
+}
+
+/* Reduce paint complexity */
+.crypto-detail__grid {
+  contain: layout;
+}
+
+/* Optimize animations */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Critical resource hints for better loading */
+.crypto-image {
+  loading: lazy;
+  decoding: async;
+}
+
+/* Optimize table rendering */
+.crypto-table {
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+/* Prevent layout shifts */
+.crypto-name-container {
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.crypto-image {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+}
+
+/* Optimize loading states */
+.crypto-table-loading,
+.crypto-detail__loading {
+  contain: layout style paint;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Reduce memory usage for large lists */
+.crypto-table tbody {
+  contain: layout style;
+}
+
+/* Optimize button interactions */
+.bookmark-button {
+  contain: layout style;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Prevent unnecessary reflows */
+.header__container {
+  contain: layout;
+}
+
+/* Optimize dropdown performance */
+.language-selector__dropdown {
+  contain: layout style paint;
+  transform: translateZ(0);
+}
+
+/* Critical CSS for above-the-fold content */
+.home-page-header,
+.mypage-header {
+  contain: layout style;
+}
+
+/* Optimize error boundaries */
+.crypto-table-error,
+.crypto-detail__error {
+  contain: layout style paint;
+}

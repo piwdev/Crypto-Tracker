@@ -60,7 +60,7 @@ describe('BookmarkButton', () => {
     beforeEach(() => {
       mockUseAuth.mockReturnValue({
         isAuthenticated: true,
-        user: { id: 1, email: 'test@example.com', username: 'testuser', created_at: '', last_login_at: null },
+        user: { id: 1, email: 'test@example.com', name: 'testuser', created_at: '', last_login_at: null },
         loading: false,
         error: null,
         login: jest.fn(),

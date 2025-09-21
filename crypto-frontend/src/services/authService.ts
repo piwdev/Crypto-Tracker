@@ -80,7 +80,14 @@ export const authService = {
         throw new ApiError('ユーザー名は英字または日本語1-20文字で入力してください', 400);
       }
 
-      const response = await api.postWithRetry('/auth/register/', userData, undefined, {
+      // Map frontend field names to backend field names
+      const backendData = {
+        email: userData.email,
+        password: userData.password,
+        name: userData.username  // Backend expects 'name' not 'username'
+      };
+
+      const response = await api.postWithRetry('/auth/register/', backendData, undefined, {
         retries: 2,
         retryCondition: (error) => error.response?.status >= 500
       });

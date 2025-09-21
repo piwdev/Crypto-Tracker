@@ -1,23 +1,23 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
 import { LanguageSelector } from './';
 import './Header.css';
 
-const Header: React.FC = () => {
+const Header: React.FC = React.memo(() => {
   const { t } = useTranslation();
   const { isAuthenticated, user, logout } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogout = async () => {
+  const handleLogout = useCallback(async () => {
     try {
       await logout();
       navigate('/');
     } catch (error) {
       console.error('Logout failed:', error);
     }
-  };
+  }, [logout, navigate]);
 
   return (
     <header className="header">
@@ -61,7 +61,7 @@ const Header: React.FC = () => {
             {isAuthenticated ? (
               <div className="header__user-section">
                 <span className="header__user-name">
-                  {user?.username || user?.email}
+                  {user?.name || user?.email}
                 </span>
                 <button 
                   onClick={handleLogout}
@@ -92,6 +92,6 @@ const Header: React.FC = () => {
       </div>
     </header>
   );
-};
+});
 
 export default Header;

@@ -18,6 +18,8 @@ jest.mock('axios', () => ({
   }))
 }));
 
+// Note: react-router-dom mocks are handled in individual test files where needed
+
 
 
 

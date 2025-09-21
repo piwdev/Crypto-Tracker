@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SUPPORTED_LANGUAGES } from '../../utils/constants';
 import './LanguageSelector.css';
@@ -7,18 +7,18 @@ interface LanguageSelectorProps {
   className?: string;
 }
 
-const LanguageSelector: React.FC<LanguageSelectorProps> = ({ className = '' }) => {
+const LanguageSelector: React.FC<LanguageSelectorProps> = React.memo(({ className = '' }) => {
   const { i18n, t } = useTranslation();
 
-  const handleLanguageChange = (language: string) => {
+  const handleLanguageChange = useCallback((language: string) => {
     i18n.changeLanguage(language);
-  };
+  }, [i18n]);
 
-  const getCurrentLanguageLabel = () => {
+  const getCurrentLanguageLabel = useMemo(() => {
     return i18n.language === SUPPORTED_LANGUAGES.JA 
       ? t('language.japanese') 
       : t('language.english');
-  };
+  }, [i18n.language, t]);
 
   return (
     <div className={`language-selector ${className}`}>
@@ -28,7 +28,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({ className = '' }) =
         title={t('language.selectLanguage')}
       >
         <span className="language-selector__current">
-          {getCurrentLanguageLabel()}
+          {getCurrentLanguageLabel}
         </span>
         <span className="language-selector__arrow">▼</span>
       </button>
@@ -55,6 +55,6 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({ className = '' }) =
       </div>
     </div>
   );
-};
+});
 
 export default LanguageSelector;

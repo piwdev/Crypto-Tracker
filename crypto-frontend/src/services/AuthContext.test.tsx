@@ -31,7 +31,7 @@ const TestComponent: React.FC = () => {
     <div>
       <div data-testid="loading">{loading ? 'Loading' : 'Not Loading'}</div>
       <div data-testid="authenticated">{isAuthenticated ? 'Authenticated' : 'Not Authenticated'}</div>
-      <div data-testid="user">{user ? `User: ${user.username}` : 'No User'}</div>
+      <div data-testid="user">{user ? `User: ${user.name}` : 'No User'}</div>
       <div data-testid="error">{error || 'No Error'}</div>
       <button onClick={() => login({ email: 'test@example.com', password: 'password' })}>
         Login
@@ -63,7 +63,7 @@ describe('AuthContext', () => {
   test('handles successful login', async () => {
     const mockUser = {
       id: 1,
-      username: 'testuser',
+      name: 'testuser',
       email: 'test@example.com',
       created_at: '2023-01-01T00:00:00Z',
       last_login_at: null
@@ -123,7 +123,7 @@ describe('AuthContext', () => {
     // First set up authenticated state
     const mockUser = {
       id: 1,
-      username: 'testuser',
+      name: 'testuser',
       email: 'test@example.com',
       created_at: '2023-01-01T00:00:00Z',
       last_login_at: null
@@ -166,7 +166,7 @@ describe('AuthContext', () => {
   test('restores authentication from localStorage on initialization', async () => {
     const mockUser = {
       id: 1,
-      username: 'testuser',
+      name: 'testuser',
       email: 'test@example.com',
       created_at: '2023-01-01T00:00:00Z',
       last_login_at: null

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
 import { bookmarkService } from '../../services/bookmarkService';
@@ -10,7 +10,7 @@ interface BookmarkButtonProps {
   onBookmarkChange?: (isBookmarked: boolean) => void;
 }
 
-const BookmarkButton: React.FC<BookmarkButtonProps> = ({ 
+const BookmarkButton: React.FC<BookmarkButtonProps> = React.memo(({ 
   coinId, 
   className = '',
   onBookmarkChange 
@@ -86,13 +86,20 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({
     }
   };
 
+  const buttonText = useMemo(() => 
+    isBookmarked ? t('crypto.removeBookmark') : t('crypto.bookmark'), 
+    [isBookmarked, t]
+  );
+  
+  const buttonClass = useMemo(() => 
+    `bookmark-button ${isBookmarked ? 'bookmark-button--bookmarked' : 'bookmark-button--not-bookmarked'} ${className}`,
+    [isBookmarked, className]
+  );
+
   // Don't render if user is not authenticated
   if (!isAuthenticated) {
     return null;
   }
-
-  const buttonText = isBookmarked ? t('crypto.removeBookmark') : t('crypto.bookmark');
-  const buttonClass = `bookmark-button ${isBookmarked ? 'bookmark-button--bookmarked' : 'bookmark-button--not-bookmarked'} ${className}`;
 
   return (
     <div className="bookmark-button-container">
@@ -118,6 +125,6 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({
       )}
     </div>
   );
-};
+});
 
 export default BookmarkButton;

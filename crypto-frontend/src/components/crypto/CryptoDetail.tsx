@@ -5,6 +5,7 @@ import { cryptoService } from '../../services/cryptoService';
 import { formatters } from '../../utils/formatters';
 import LoadingSpinner from '../common/LoadingSpinner';
 import ErrorMessage from '../common/ErrorMessage';
+import OptimizedImage from '../common/OptimizedImage';
 import BookmarkButton from './BookmarkButton';
 import './CryptoDetail.css';
 
@@ -12,7 +13,7 @@ interface CryptoDetailProps {
   coinId: string;
 }
 
-const CryptoDetail: React.FC<CryptoDetailProps> = ({ coinId }) => {
+const CryptoDetail: React.FC<CryptoDetailProps> = React.memo(({ coinId }) => {
   const { t } = useTranslation();
   const [coin, setCoin] = useState<Coin | null>(null);
   const [loading, setLoading] = useState(true);
@@ -46,7 +47,7 @@ const CryptoDetail: React.FC<CryptoDetailProps> = ({ coinId }) => {
     }
   }, [coinId, fetchCoinDetail]);
 
-  const formatValue = (value: number | null | undefined, type: 'currency' | 'percentage' | 'large' | 'number' = 'number'): string => {
+  const formatValue = useCallback((value: number | null | undefined, type: 'currency' | 'percentage' | 'large' | 'number' = 'number'): string => {
     if (value === null || value === undefined) {
       return t('crypto.notAvailable');
     }
@@ -63,19 +64,19 @@ const CryptoDetail: React.FC<CryptoDetailProps> = ({ coinId }) => {
       default:
         return value.toString();
     }
-  };
+  }, [t]);
 
-  const formatDate = (dateString: string | null | undefined): string => {
+  const formatDate = useCallback((dateString: string | null | undefined): string => {
     if (!dateString) {
       return t('crypto.notAvailable');
     }
     return formatters.formatDateTime(dateString);
-  };
+  }, [t]);
 
-  const getChangeClass = (value: number | null | undefined): string => {
+  const getChangeClass = useCallback((value: number | null | undefined): string => {
     if (value === null || value === undefined) return '';
     return value >= 0 ? 'crypto-detail__positive' : 'crypto-detail__negative';
-  };
+  }, []);
 
   if (loading) {
     return (
@@ -109,13 +110,13 @@ const CryptoDetail: React.FC<CryptoDetailProps> = ({ coinId }) => {
     <div className="crypto-detail">
       <div className="crypto-detail__header">
         <div className="crypto-detail__title">
-          <img 
+          <OptimizedImage
             src={coin.image} 
             alt={coin.name}
             className="crypto-detail__image"
-            onError={(e) => {
-              (e.target as HTMLImageElement).style.display = 'none';
-            }}
+            width={48}
+            height={48}
+            loading="eager"
           />
           <div className="crypto-detail__title-text">
             <h1 className="crypto-detail__name">{coin.name}</h1>
@@ -311,6 +312,6 @@ const CryptoDetail: React.FC<CryptoDetailProps> = ({ coinId }) => {
       </div>
     </div>
   );
-};
+});
 
 export default CryptoDetail;

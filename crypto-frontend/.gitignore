@@ -7,6 +7,11 @@
 
 # testing
 /coverage
+**/*.test.tsx
+**/*.test.ts
+**/*.spec.tsx
+**/*.spec.ts
+/src/__tests__
 
 # production
 /build

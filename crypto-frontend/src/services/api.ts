@@ -112,7 +112,7 @@ api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('authToken');
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers.Authorization = `Token ${token}`;
     }
 
     // リクエスト開始時刻を記録（タイムアウト監視用）

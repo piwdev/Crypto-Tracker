@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Coin } from '../../types/crypto';
 import { formatters } from '../../utils/formatters';
+import OptimizedImage from '../common/OptimizedImage';
 import './CryptoRow.css';
 
 interface CryptoRowProps {
@@ -9,21 +10,18 @@ interface CryptoRowProps {
   onClick?: (coinId: string) => void;
 }
 
-export const CryptoRow: React.FC<CryptoRowProps> = ({ coin, onClick }) => {
+export const CryptoRow: React.FC<CryptoRowProps> = React.memo(({ coin, onClick }) => {
   const navigate = useNavigate();
 
-  const handleRowClick = () => {
+  const handleRowClick = useCallback(() => {
     if (onClick) {
       onClick(coin.id);
     } else {
       navigate(`/detail/${coin.id}`);
     }
-  };
+  }, [coin.id, onClick, navigate]);
 
-  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
-    const target = e.target as HTMLImageElement;
-    target.style.display = 'none';
-  };
+
 
   return (
     <tr 
@@ -35,11 +33,13 @@ export const CryptoRow: React.FC<CryptoRowProps> = ({ coin, onClick }) => {
       </td>
       <td className="crypto-name">
         <div className="crypto-name-container">
-          <img 
+          <OptimizedImage
             src={coin.image || ''} 
             alt={coin.name || 'Cryptocurrency'}
             className="crypto-image"
-            onError={handleImageError}
+            width={24}
+            height={24}
+            loading="lazy"
           />
           <div className="crypto-name-text">
             <span className="crypto-name-full">{coin.name || 'Unknown'}</span>
@@ -61,4 +61,4 @@ export const CryptoRow: React.FC<CryptoRowProps> = ({ coin, onClick }) => {
       </td>
     </tr>
   );
-};
+});
