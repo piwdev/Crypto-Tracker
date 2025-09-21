@@ -37,7 +37,7 @@ const Header: React.FC = React.memo(() => {
                 {t('navigation.home')}
               </Link>
             </li>
-            
+
             {/* Authenticated user navigation */}
             {isAuthenticated && (
               <li className="header__nav-item">
@@ -63,7 +63,7 @@ const Header: React.FC = React.memo(() => {
                 <span className="header__user-name">
                   {user?.name || user?.email}
                 </span>
-                <button 
+                <button
                   onClick={handleLogout}
                   className="header__auth-button header__auth-button--logout"
                   type="button"
@@ -73,14 +73,14 @@ const Header: React.FC = React.memo(() => {
               </div>
             ) : (
               <div className="header__guest-section">
-                <Link 
-                  to="/login" 
+                <Link
+                  to="/login"
                   className="header__auth-button header__auth-button--login"
                 >
                   {t('navigation.login')}
                 </Link>
-                <Link 
-                  to="/createaccount" 
+                <Link
+                  to="/createaccount"
                   className="header__auth-button header__auth-button--register"
                 >
                   {t('navigation.createAccount')}
@@ -90,6 +90,7 @@ const Header: React.FC = React.memo(() => {
           </div>
         </div>
       </div>
+      <div style={{ textAlign: "center" }}>this site's data is from https://www.coingecko.com</div>
     </header>
   );
 });
