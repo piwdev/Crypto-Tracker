@@ -83,32 +83,35 @@ jobs:
         # Upload to S3
         aws s3 cp $DEPLOY_ZIP s3://$S3_BUCKET/
         
-        aws elasticbeanstalk create-application-version \
+        # Try to create application version and deploy
+        if aws elasticbeanstalk create-application-version \
           --application-name crypto-tracker-api \
           --version-label $VERSION_LABEL \
           --source-bundle S3Bucket="$S3_BUCKET",S3Key="$(basename $DEPLOY_ZIP)" \
-          --region ap-northeast-1
-        
-        # Verify environment exists
-        echo "Checking if environment exists: ${{ secrets.EB_ENVIRONMENT_NAME }}"
-        aws elasticbeanstalk describe-environments \
-          --application-name crypto-tracker-api \
-          --environment-names ${{ secrets.EB_ENVIRONMENT_NAME }} \
-          --region ap-northeast-1
-        
-        # Deploy to environment
-        echo "Deploying to environment: ${{ secrets.EB_ENVIRONMENT_NAME }}"
-        aws elasticbeanstalk update-environment \
-          --application-name crypto-tracker-api \
-          --environment-name ${{ secrets.EB_ENVIRONMENT_NAME }} \
-          --version-label $VERSION_LABEL \
-          --region ap-northeast-1
-        
-        # Wait for deployment to complete
-        echo "Waiting for deployment to complete..."
-        aws elasticbeanstalk wait environment-updated \
-          --application-name crypto-tracker-api \
-          --environment-names ${{ secrets.EB_ENVIRONMENT_NAME }} \
-          --region ap-northeast-1
+          --region ap-northeast-1; then
+          
+          echo "✅ Application version created successfully"
+          
+          # Deploy to environment
+          echo "Deploying to environment: ${{ secrets.EB_ENVIRONMENT_NAME }}"
+          aws elasticbeanstalk update-environment \
+            --application-name crypto-tracker-api \
+            --environment-name ${{ secrets.EB_ENVIRONMENT_NAME }} \
+            --version-label $VERSION_LABEL \
+            --region ap-northeast-1
+          
+          # Wait for deployment to complete
+          echo "Waiting for deployment to complete..."
+          aws elasticbeanstalk wait environment-updated \
+            --application-name crypto-tracker-api \
+            --environment-names ${{ secrets.EB_ENVIRONMENT_NAME }} \
+            --region ap-northeast-1
+            
+        else
+          echo "❌ Failed to create application version due to permissions"
+          echo "Please add ElasticBeanstalk permissions to github-actions IAM user"
+          echo "Required permissions: elasticbeanstalk:CreateApplicationVersion"
+          exit 1
+        fi
         
         echo "✅ Deployment completed successfully!"
