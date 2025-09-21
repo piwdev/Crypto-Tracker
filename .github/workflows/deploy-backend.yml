@@ -54,11 +54,19 @@ jobs:
         mkdir -p .elasticbeanstalk
         echo "branch-defaults:" > .elasticbeanstalk/config.yml
         echo "  main:" >> .elasticbeanstalk/config.yml
-        echo "    environment: ${{ secrets.EB_ENVIRONMENT_NAME }}" >> .elasticbeanstalk/config.yml
+        echo "    environment: crypto-tracker-prod" >> .elasticbeanstalk/config.yml
         echo "global:" >> .elasticbeanstalk/config.yml
         echo "  application_name: crypto-tracker-api" >> .elasticbeanstalk/config.yml
         echo "  default_region: ap-northeast-1" >> .elasticbeanstalk/config.yml
         
+        # Debug: Check EB configuration
+        echo "EB Config file contents:"
+        cat .elasticbeanstalk/config.yml
+        
+        # Debug: List available environments
+        echo "Available EB environments:"
+        eb list
+        
         # Deploy to existing environment
-        echo "Deploying to environment..."
-        eb deploy ${{ secrets.EB_ENVIRONMENT_NAME }}
+        echo "Deploying to environment: crypto-tracker-prod"
+        eb deploy crypto-tracker-prod
