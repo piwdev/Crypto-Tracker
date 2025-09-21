@@ -68,3 +68,8 @@ pip-log.txt
 pip-delete-this-directory.txt
 .tox/
 .pytest_cache/
+
+# Django test databases
+*.sqlite3
+
+*.md
