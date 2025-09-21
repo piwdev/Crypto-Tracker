@@ -50,22 +50,35 @@ jobs:
         # Use existing application without eb init
         export AWS_DEFAULT_REGION=ap-northeast-1
         
-        # Create minimal EB config
+        # Create complete EB config
         mkdir -p .elasticbeanstalk
-        echo "branch-defaults:" > .elasticbeanstalk/config.yml
-        echo "  main:" >> .elasticbeanstalk/config.yml
-        echo "    environment: crypto-tracker-prod" >> .elasticbeanstalk/config.yml
-        echo "global:" >> .elasticbeanstalk/config.yml
-        echo "  application_name: crypto-tracker-api" >> .elasticbeanstalk/config.yml
-        echo "  default_region: ap-northeast-1" >> .elasticbeanstalk/config.yml
+        cat > .elasticbeanstalk/config.yml << 'EOF'
+        branch-defaults:
+          main:
+            environment: crypto-tracker-prod
+        global:
+          application_name: crypto-tracker-api
+          default_ec2_keyname: null
+          default_platform: python-3.11
+          default_region: ap-northeast-1
+          include_git_submodules: true
+          instance_profile: null
+          platform_name: null
+          platform_version: null
+          profile: null
+          sc: git
+          workspace_type: Application
+        EOF
         
         # Debug: Check EB configuration
         echo "EB Config file contents:"
         cat .elasticbeanstalk/config.yml
         
-        # Debug: List available environments
-        echo "Available EB environments:"
-        eb list
+        # Debug: List available environments and applications
+        echo "Available EB applications:"
+        eb list --all
+        echo "Trying to list environments for crypto-tracker-api:"
+        aws elasticbeanstalk describe-environments --application-name crypto-tracker-api --region ap-northeast-1
         
         # Deploy to existing environment
         echo "Deploying to environment: crypto-tracker-prod"

@@ -1,9 +1,6 @@
 """
 Django settings for crypto_backend project.
 Updated for GitHub Actions deployment.
-"""
-
-
 
 For more information on this file, see
 https://docs.djangoproject.com/en/4.2/topics/settings/
@@ -32,11 +29,17 @@ SECRET_KEY = config(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", default=True, cast=bool)
 
-ALLOWED_HOSTS = config(
-    "ALLOWED_HOSTS",
-    default="localhost,127.0.0.1,.elasticbeanstalk.com,.ap-northeast-1.elb.amazonaws.com",
-    cast=lambda v: [s.strip() for s in v.split(",")],
-)
+# Configure ALLOWED_HOSTS for both local development and Elastic Beanstalk
+if 'RDS_HOSTNAME' in os.environ:
+    # Elastic Beanstalk deployment - be more permissive for AWS internal traffic
+    ALLOWED_HOSTS = ['*']  # Allow all hosts in production for now
+else:
+    # Local development
+    ALLOWED_HOSTS = config(
+        "ALLOWED_HOSTS",
+        default="localhost,127.0.0.1",
+        cast=lambda v: [s.strip() for s in v.split(",")],
+    )
 
 
 # Application definition
