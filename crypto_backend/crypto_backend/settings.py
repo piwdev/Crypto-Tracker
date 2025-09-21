@@ -31,7 +31,7 @@ DEBUG = config("DEBUG", default=True, cast=bool)
 
 ALLOWED_HOSTS = config(
     "ALLOWED_HOSTS",
-    default="localhost,127.0.0.1",
+    default="localhost,127.0.0.1,.elasticbeanstalk.com,.ap-northeast-1.elb.amazonaws.com",
     cast=lambda v: [s.strip() for s in v.split(",")],
 )
 
@@ -133,6 +133,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
+STATIC_ROOT = BASE_DIR / "static"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -164,6 +165,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3001",  # React development server (alternative port)
     "http://127.0.0.1:3000",
     "http://127.0.0.1:3001",
+    "https://crypto-tracker.parkinwoo.dev",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
