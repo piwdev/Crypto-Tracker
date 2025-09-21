@@ -1,6 +1,6 @@
 """
 Django settings for crypto_backend project.
-Updated for GitHub Actions deployment.
+Updated for GitHub Actions deployment with secrets.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/4.2/topics/settings/
