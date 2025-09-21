@@ -12,15 +12,8 @@ DATABASES = {
     }
 }
 
-# Disable migrations for faster tests
-class DisableMigrations:
-    def __contains__(self, item):
-        return True
-    
-    def __getitem__(self, item):
-        return None
-
-MIGRATION_MODULES = DisableMigrations()
+# Keep migrations enabled for test reliability
+# MIGRATION_MODULES can cause issues with complex tests
 
 # Faster password hashing for tests
 PASSWORD_HASHERS = [
@@ -39,3 +32,11 @@ CACHES = {
 
 # Disable CORS checks in tests
 CORS_ALLOW_ALL_ORIGINS = True
+
+# Test-specific settings
+SECRET_KEY = 'test-secret-key-for-ci-only'
+DEBUG = False
+ALLOWED_HOSTS = ['testserver', 'localhost', '127.0.0.1']
+
+# Disable external API calls in tests
+USE_TZ = True
