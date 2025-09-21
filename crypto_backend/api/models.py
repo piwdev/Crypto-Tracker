@@ -93,19 +93,19 @@ class Coin(models.Model):
 
     # Price information
     current_price = models.DecimalField(
-        max_digits=20, decimal_places=8, null=True, blank=True
+        max_digits=1000, decimal_places=50, null=True, blank=True
     )
     high_24h = models.DecimalField(
-        max_digits=20, decimal_places=8, null=True, blank=True
+        max_digits=1000, decimal_places=50, null=True, blank=True
     )
     low_24h = models.DecimalField(
-        max_digits=20, decimal_places=8, null=True, blank=True
+        max_digits=1000, decimal_places=50, null=True, blank=True
     )
     price_change_24h = models.DecimalField(
-        max_digits=20, decimal_places=8, null=True, blank=True
+        max_digits=1000, decimal_places=50, null=True, blank=True
     )
     price_change_percentage_24h = models.DecimalField(
-        max_digits=10, decimal_places=6, null=True, blank=True
+        max_digits=1000, decimal_places=50, null=True, blank=True
     )
 
     # Market cap information
@@ -113,7 +113,7 @@ class Coin(models.Model):
     market_cap_rank = models.IntegerField(null=True, blank=True)
     market_cap_change_24h = models.BigIntegerField(null=True, blank=True)
     market_cap_change_percentage_24h = models.DecimalField(
-        max_digits=10, decimal_places=6, null=True, blank=True
+        max_digits=1000, decimal_places=50, null=True, blank=True
     )
 
     # Valuation and volume
@@ -122,26 +122,26 @@ class Coin(models.Model):
 
     # Supply information
     circulating_supply = models.DecimalField(
-        max_digits=20, decimal_places=8, null=True, blank=True
+        max_digits=1000, decimal_places=50, null=True, blank=True
     )
     total_supply = models.DecimalField(
-        max_digits=20, decimal_places=8, null=True, blank=True
+        max_digits=1000, decimal_places=50, null=True, blank=True
     )
     max_supply = models.DecimalField(
-        max_digits=20, decimal_places=8, null=True, blank=True
+        max_digits=1000, decimal_places=50, null=True, blank=True
     )
 
     # All-time high information
-    ath = models.DecimalField(max_digits=20, decimal_places=8, null=True, blank=True)
+    ath = models.DecimalField(max_digits=1000, decimal_places=50, null=True, blank=True)
     ath_change_percentage = models.DecimalField(
-        max_digits=10, decimal_places=6, null=True, blank=True
+        max_digits=1000, decimal_places=50, null=True, blank=True
     )
     ath_date = models.DateTimeField(null=True, blank=True)
 
     # All-time low information
-    atl = models.DecimalField(max_digits=20, decimal_places=8, null=True, blank=True)
+    atl = models.DecimalField(max_digits=1000, decimal_places=50, null=True, blank=True)
     atl_change_percentage = models.DecimalField(
-        max_digits=10, decimal_places=6, null=True, blank=True
+        max_digits=1000, decimal_places=50, null=True, blank=True
     )
     atl_date = models.DateTimeField(null=True, blank=True)
 
