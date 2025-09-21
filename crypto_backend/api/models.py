@@ -44,7 +44,7 @@ class User(AbstractUser):
     """
 
     # Override username field to make it non-unique and optional
-    username = models.CharField(max_length=20, unique=False, null=True, blank=True)
+    username = models.CharField(max_length=254, unique=False, null=True, blank=True)
 
     # Email field as the unique identifier
     email = models.EmailField(max_length=254, unique=True)
