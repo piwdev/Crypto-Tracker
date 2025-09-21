@@ -23,7 +23,10 @@ jobs:
 
     - name: Install dependencies
       working-directory: crypto-frontend
-      run: npm ci
+      run: |
+        # Clear npm cache and install with legacy peer deps to handle version conflicts
+        npm cache clean --force
+        npm install --legacy-peer-deps
 
     - name: Build React app
       working-directory: crypto-frontend
