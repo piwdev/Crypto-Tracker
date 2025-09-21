@@ -65,33 +65,39 @@ jobs:
     - name: Deploy to Elastic Beanstalk
       working-directory: crypto_backend
       run: |
-        # Use existing application without eb init
-        export AWS_DEFAULT_REGION=ap-northeast-1
+        # Create deployment package
+        echo "Creating deployment package..."
+        zip -r ../deploy-$(date +%Y%m%d-%H%M%S).zip . -x "*.git*" "*__pycache__*" "*.pyc" "*venv*" "*.elasticbeanstalk*" "*.DS_Store*"
         
-        # Create complete EB config
-        mkdir -p .elasticbeanstalk
-        cat > .elasticbeanstalk/config.yml << EOF
-        branch-defaults:
-          main:
-            environment: ${{ secrets.EB_ENVIRONMENT_NAME }}
-        global:
-          application_name: crypto-tracker-api
-          default_ec2_keyname: null
-          default_platform: python-3.11
-          default_region: ap-northeast-1
-          include_git_submodules: true
-          instance_profile: null
-          platform_name: null
-          platform_version: null
-          profile: null
-          sc: git
-          workspace_type: Application
-        EOF
+        # Get the zip file name
+        DEPLOY_ZIP=$(ls ../deploy-*.zip | head -1)
+        echo "Created deployment package: $DEPLOY_ZIP"
         
-        # Verify EB configuration
-        echo "EB Config created successfully"
-        echo "Deploying to: ${{ secrets.EB_ENVIRONMENT_NAME }}"
+        # Create application version
+        VERSION_LABEL="github-actions-$(date +%Y%m%d-%H%M%S)"
+        echo "Creating application version: $VERSION_LABEL"
         
-        # Deploy to existing environment
+        aws s3 cp $DEPLOY_ZIP s3://elasticbeanstalk-ap-northeast-1-$(aws sts get-caller-identity --query Account --output text)/
+        
+        aws elasticbeanstalk create-application-version \
+          --application-name crypto-tracker-api \
+          --version-label $VERSION_LABEL \
+          --source-bundle S3Bucket="elasticbeanstalk-ap-northeast-1-$(aws sts get-caller-identity --query Account --output text)",S3Key="$(basename $DEPLOY_ZIP)" \
+          --region ap-northeast-1
+        
+        # Deploy to environment
         echo "Deploying to environment: ${{ secrets.EB_ENVIRONMENT_NAME }}"
-        eb deploy ${{ secrets.EB_ENVIRONMENT_NAME }}
+        aws elasticbeanstalk update-environment \
+          --application-name crypto-tracker-api \
+          --environment-name ${{ secrets.EB_ENVIRONMENT_NAME }} \
+          --version-label $VERSION_LABEL \
+          --region ap-northeast-1
+        
+        # Wait for deployment to complete
+        echo "Waiting for deployment to complete..."
+        aws elasticbeanstalk wait environment-updated \
+          --application-name crypto-tracker-api \
+          --environment-names ${{ secrets.EB_ENVIRONMENT_NAME }} \
+          --region ap-northeast-1
+        
+        echo "✅ Deployment completed successfully!"
