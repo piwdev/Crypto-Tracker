@@ -42,13 +42,13 @@ jobs:
         
         # Run a simple test to verify Django setup
         python -c "
-import os
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'crypto_backend.test_settings')
-import django
-django.setup()
-from django.contrib.auth.models import User
-print('✅ Django setup successful')
-"
+        import os
+        os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'crypto_backend.test_settings')
+        import django
+        django.setup()
+        from django.contrib.auth.models import User
+        print('✅ Django setup successful')
+        "
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v4
