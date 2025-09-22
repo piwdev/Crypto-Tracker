@@ -90,7 +90,6 @@ const Header: React.FC = React.memo(() => {
           </div>
         </div>
       </div>
-      <div style={{ textAlign: "center" }}>this site's data is from https://www.coingecko.com</div>
     </header>
   );
 });

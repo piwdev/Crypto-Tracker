@@ -127,5 +127,8 @@
     "title": "Page Not Found",
     "message": "The page you are looking for doesn't exist or has been moved.",
     "backToHome": "Back to Home"
+  },
+  "footer": {
+    "dataSource": "This site uses data from https://www.coingecko.com "
   }
 }

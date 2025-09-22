@@ -127,5 +127,8 @@
     "title": "ページが見つかりません",
     "message": "お探しのページは存在しないか、移動された可能性があります。",
     "backToHome": "ホームに戻る"
+  },
+  "footer": {
+    "dataSource": "このサイトのデータは https://www.coingecko.com のデータを利用しています"
   }
 }

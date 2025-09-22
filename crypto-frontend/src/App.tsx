@@ -7,6 +7,7 @@ import './i18n'; // i18n initialization
 import { ErrorProvider } from './contexts/ErrorContext';
 import { 
   Header, 
+  Footer,
   ProtectedRoute, 
   AuthRedirect, 
   ErrorBoundary, 
@@ -53,6 +54,8 @@ function App() {
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </main>
+          
+          <Footer />
         </div>
       </ErrorBoundary>
     </ErrorProvider>

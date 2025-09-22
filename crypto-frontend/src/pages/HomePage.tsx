@@ -9,6 +9,7 @@ import './HomePage.css';
 export const HomePage: React.FC = React.memo(() => {
   const { t } = useTranslation();
   const [coins, setCoins] = useState<Coin[]>([]);
+  const [lastupdatetime, setLastupdatetime] = useState<string>('-');
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -18,6 +19,10 @@ export const HomePage: React.FC = React.memo(() => {
       setError(null);
       const response = await cryptoService.getCoinList();
       setCoins(response.data);
+      // get last update time
+      const lastupdate_response = await cryptoService.getCoinDetail('bitcoin');
+      const d = lastupdate_response.data.updated_at;
+      setLastupdatetime(`${d.substring(0,10)} ${d.substring(11, 19)} ${d.substring(26,32)}`);
     } catch (err: any) {
       console.error('Error fetching cryptocurrencies:', err);
       setError(err.message || t('errors.serverError'));
@@ -36,6 +41,7 @@ export const HomePage: React.FC = React.memo(() => {
       <p className="home-page-description">
         {t('navigation.home')} - {t('crypto.topCryptocurrencies')}
       </p>
+      <p>{t('crypto.lastUpdated')} {lastupdatetime} </p>
     </div>
   ), [t]);
 
