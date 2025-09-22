@@ -1,4 +1,4 @@
-// 暗号通貨関連の型定義
+// 仮想通貨関連の型定義
 export interface Coin {
   id: string;
   symbol: string;

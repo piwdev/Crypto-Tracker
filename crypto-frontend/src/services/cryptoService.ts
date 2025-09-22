@@ -3,8 +3,8 @@ import { CoinListResponse, CoinDetailResponse } from '../types/crypto';
 import { ApiError } from '../types/api';
 
 export const cryptoService = {
-  // 暗号通貨リスト取得（上位10位）
-  // 要件 1.1: market_cap_rank 1-10の暗号通貨を表示
+  // 仮想通貨リスト取得（上位10位）
+  // 要件 1.1: market_cap_rank 1-10の仮想通貨を表示
   getCoinList: async (): Promise<CoinListResponse> => {
     try {
       const response = await api.getWithRetry('/coins/', undefined, {
@@ -48,11 +48,11 @@ export const cryptoService = {
       }
 
       // その他の予期しないエラー
-      throw new ApiError('暗号通貨データの取得中にエラーが発生しました。', 500, error);
+      throw new ApiError('仮想通貨データの取得中にエラーが発生しました。', 500, error);
     }
   },
 
-  // 特定の暗号通貨詳細取得
+  // 特定の仮想通貨詳細取得
   // 要件 5.1: 指定されたcoin_idのcoinsテーブルのすべての列を表示
   getCoinDetail: async (coinId: string): Promise<CoinDetailResponse> => {
     try {
@@ -86,7 +86,7 @@ export const cryptoService = {
 
       // 404エラー（コインが見つからない）の特別処理
       if (error && typeof error === 'object' && 'response' in error && error.response && typeof error.response === 'object' && 'status' in error.response && error.response.status === 404) {
-        throw new ApiError('指定された暗号通貨が見つかりません。', 404);
+        throw new ApiError('指定された仮想通貨が見つかりません。', 404);
       }
 
       // ネットワークエラー
@@ -108,7 +108,7 @@ export const cryptoService = {
       }
 
       // その他の予期しないエラー
-      throw new ApiError('暗号通貨の詳細データ取得中にエラーが発生しました。', 500, error);
+      throw new ApiError('仮想通貨の詳細データ取得中にエラーが発生しました。', 500, error);
     }
   },
 
