@@ -27,14 +27,16 @@ export const LoginForm: React.FC = () => {
   });
   
   const [errors, setErrors] = useState<LoginFormErrors>({});
+  const [serverErrors, setServerErrors] = useState<string>();
   const [touched, setTouched] = useState<{ [key: string]: boolean }>({});
 
   // Clear auth error when component mounts or form data changes
   useEffect(() => {
     if (error) {
+      setServerErrors(error);
       clearError();
     }
-  }, [formData, error, clearError]);
+  }, []);
 
   // Handle input changes
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -146,9 +148,9 @@ export const LoginForm: React.FC = () => {
       <div className="login-form-card">
         <h1 className="login-form-title">{t('auth.loginTitle')}</h1>
         
-        {error && (
+        {serverErrors && (
           <ErrorMessage 
-            message={error} 
+            message={serverErrors} 
             onClose={clearError}
           />
         )}

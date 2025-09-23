@@ -31,6 +31,7 @@ export const CreateAccountForm: React.FC = () => {
   });
   
   const [errors, setErrors] = useState<CreateAccountFormErrors>({});
+  const [serverErrors, setServerErrors] = useState<string>();
   const [touched, setTouched] = useState<{ [key: string]: boolean }>({});
 
   // Redirect to home if already authenticated
@@ -43,9 +44,10 @@ export const CreateAccountForm: React.FC = () => {
   // Clear auth error when component mounts or form data changes
   useEffect(() => {
     if (error) {
+      setServerErrors(error);
       clearError();
     }
-  }, [formData, error, clearError]);
+  }, []);
 
   // Handle input changes with real-time validation
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -180,9 +182,9 @@ export const CreateAccountForm: React.FC = () => {
       <div className="create-account-form-card">
         <h1 className="create-account-form-title">{t('auth.registerTitle')}</h1>
         
-        {error && (
+        {serverErrors && (
           <ErrorMessage 
-            message={error} 
+            message={serverErrors} 
             onClose={clearError}
           />
         )}
