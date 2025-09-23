@@ -2,9 +2,26 @@
 暗号通貨の価格をチェックできるサイト。ユーザーはお気に入りコインをブックマークできる。
 this is service to check cryptocurrency(coins)
 
-サイトURL https://crypto-tracker.parkinwoo.dev/
+**サイトURL https://crypto-tracker.parkinwoo.dev/**
 
-<img width="3809" height="2158" alt="image" src="https://github.com/user-attachments/assets/c22ae758-6919-4259-8280-6e275572fb4c" />
+**ログイン用アカウント(登録めんどくさい人向け)**<br>
+id : sample@example.com<br>
+pw : password
+
+### Home ('/)
+<img width=40% height=40% alt="image" src="https://github.com/user-attachments/assets/efc745b1-579b-4e09-af0b-c787b77ac8dd" />
+
+### List
+#### 非ログイン
+<img width=40% height=40% alt="image" src="https://github.com/user-attachments/assets/49cd1f7f-05c1-4619-876b-64c81226f1c7" />
+
+#### ログイン
+**ログインユーザーはbookmark可能**
+<img width=40% height=40% alt="image" src="https://github.com/user-attachments/assets/9cffda4d-ff85-47aa-aa2b-95d7b026a8c5" />
+
+#### マイページ  
+<img width=40% height=40% alt="image" src="https://github.com/user-attachments/assets/3f18e2f7-179e-4fd4-ad53-54d9ff33754c" />
+
 
 # Architecture
 - Source : Github (This Repo)
