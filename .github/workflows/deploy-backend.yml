@@ -2,7 +2,7 @@ name: Deploy Backend to AWS
 
 on:
   push:
-    branches: [main]
+    branches: [production]
     paths: ['crypto_backend/**']
   workflow_dispatch:
 
