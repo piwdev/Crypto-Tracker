@@ -3,17 +3,24 @@ import { useNavigate } from 'react-router-dom';
 import { Coin } from '../../types/crypto';
 import { formatters } from '../../utils/formatters';
 import OptimizedImage from '../common/OptimizedImage';
+import BookmarkButton from './BookmarkButton';
 import './CryptoRow.css';
 
 interface CryptoRowProps {
   coin: Coin;
   onClick?: (coinId: string) => void;
+  showBookmarkButton?: boolean;
 }
 
-export const CryptoRow: React.FC<CryptoRowProps> = React.memo(({ coin, onClick }) => {
+export const CryptoRow: React.FC<CryptoRowProps> = React.memo(({ coin, onClick, showBookmarkButton = false }) => {
   const navigate = useNavigate();
 
-  const handleRowClick = useCallback(() => {
+  const handleRowClick = useCallback((event: React.MouseEvent) => {
+    // Prevent row click when clicking on bookmark button
+    if ((event.target as HTMLElement).closest('.bookmark-button-container')) {
+      return;
+    }
+    
     if (onClick) {
       onClick(coin.id);
     } else {
@@ -59,6 +66,14 @@ export const CryptoRow: React.FC<CryptoRowProps> = React.memo(({ coin, onClick }
       <td className="crypto-market-cap">
         {formatters.formatLargeNumber(coin.market_cap || 0)}
       </td>
+      {showBookmarkButton && (
+        <td className="crypto-bookmark">
+          <BookmarkButton 
+            coinId={coin.id}
+            className="crypto-row-bookmark"
+          />
+        </td>
+      )}
     </tr>
   );
 });

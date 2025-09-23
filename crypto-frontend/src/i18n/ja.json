@@ -131,6 +131,17 @@
     "message": "お探しのページは存在しないか、移動された可能性があります。",
     "backToHome": "ホームに戻る"
   },
+  "pagination": {
+    "previous": "前へ",
+    "next": "次へ",
+    "page": "ページ",
+    "of": "の",
+    "goToPage": "{{page}}ページへ移動",
+    "currentPage": "現在のページ、{{page}}ページ",
+    "navigation": "ページネーション",
+    "showing": "{{total}}件中 {{start}}〜{{end}}件を表示",
+    "keyboardInstructions": "矢印キーでページ移動、Home/Endキーで最初/最後のページに移動"
+  },
   "footer": {
     "aboutSite" : "データソース: \r\n準拠規約: 本サイトはCoinGeckoの利用規約に基づき開発・運営されています。\r\n著作権: 表示されるデータに関する著作権および全ての権利は、情報提供元であるCoinGeckoに帰属します。\r\n当サイトのお問い合わせ先 : E-mail(parkinwoo@parkinwoo.dev)",
     "dataSource": "CoinGecko API",

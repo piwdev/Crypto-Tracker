@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CryptoTable } from '../components/crypto';
-import { LoadingSpinner, ErrorMessage } from '../components/common';
+import { LoadingSpinner, ErrorMessage, Pagination } from '../components/common';
 import { cryptoService } from '../services/cryptoService';
 import { Coin } from '../types/crypto';
+import { calculatePageIndices } from '../utils/pagination';
 import './ListPage.css';
 
 export const ListPage: React.FC = React.memo(() => {
@@ -12,6 +13,10 @@ export const ListPage: React.FC = React.memo(() => {
   const [lastupdatetime, setLastupdatetime] = useState<string>('-');
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const itemsPerPage = 20; // Default items per page as per requirement 1.1
 
   const fetchWholeCryptocurrencies = useCallback(async () => {
     try {
@@ -22,6 +27,8 @@ export const ListPage: React.FC = React.memo(() => {
         cryptoService.getCoinDetail('bitcoin')
       ]);
       setCoins(response.data);
+      // Reset to first page when data is refreshed (requirement 3.4)
+      setCurrentPage(1);
       // get last update time
       const d = lastupdate_response.data.updated_at;
       setLastupdatetime(`${d.substring(0, 10)} ${d.substring(11, 19)} ${d.substring(26, 32)}`);
@@ -36,6 +43,19 @@ export const ListPage: React.FC = React.memo(() => {
   useEffect(() => {
     fetchWholeCryptocurrencies();
   }, [fetchWholeCryptocurrencies]);
+
+  // Calculate paginated data
+  const paginatedData = useMemo(() => {
+    const { startIndex, endIndex } = calculatePageIndices(currentPage, itemsPerPage);
+    return coins.slice(startIndex, endIndex);
+  }, [coins, currentPage, itemsPerPage]);
+
+  // Page change handler with scroll-to-top functionality (requirement 4.4)
+  const handlePageChange = useCallback((page: number) => {
+    setCurrentPage(page);
+    // Scroll to top of the page for better user experience
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
 
   const pageHeader = useMemo(() => (
     <div className="list-page-header">
@@ -72,10 +92,22 @@ export const ListPage: React.FC = React.memo(() => {
 
       <div className="list-page-content">
         <CryptoTable
-          coins={coins}
+          coins={paginatedData}
           loading={loading}
           error={error}
+          showBookmarkButtons={true}
         />
+        
+        {/* Pagination component - only show when there are coins and no error */}
+        {!loading && !error && coins.length > 0 && (
+          <Pagination
+            currentPage={currentPage}
+            totalItems={coins.length}
+            itemsPerPage={itemsPerPage}
+            onPageChange={handlePageChange}
+            className="list-page-pagination"
+          />
+        )}
       </div>
     </div>
   );

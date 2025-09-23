@@ -131,6 +131,17 @@
     "message": "The page you are looking for doesn't exist or has been moved.",
     "backToHome": "Back to Home"
   },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page",
+    "of": "of",
+    "goToPage": "Go to page {{page}}",
+    "currentPage": "Current page, page {{page}}",
+    "navigation": "Pagination navigation",
+    "showing": "Showing {{start}} to {{end}} of {{total}} items",
+    "keyboardInstructions": "Use arrow keys to navigate pages, Home/End to go to first/last page"
+  },
   "footer": {
     "aboutSite" : "Data Provider: All data is supplied by the \r\nTerms of Service: This site adheres to the CoinGecko Terms of Service.\r\nCopyright: The copyright for all data displayed belongs to CoinGecko.\r\nContact :  E-mail(parkinwoo@parkinwoo.dev)",
     "dataSourceName" : "CoinGecko API",

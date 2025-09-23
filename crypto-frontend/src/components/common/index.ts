@@ -8,5 +8,6 @@ export { default as ErrorBoundary } from './ErrorBoundary';
 export { default as GlobalErrorNotification } from './GlobalErrorNotification';
 export { default as NetworkStatus } from './NetworkStatus';
 export { default as OptimizedImage } from './OptimizedImage';
+export { default as Pagination } from './Pagination';
 export { ProtectedRoute } from './ProtectedRoute';
 export { AuthRedirect } from './AuthRedirect';

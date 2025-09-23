@@ -31,6 +31,12 @@
   margin-top: 20px;
 }
 
+.list-page-pagination {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .list-page {

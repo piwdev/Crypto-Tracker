@@ -3,16 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { CreateAccountForm } from '../components/auth/CreateAccountForm';
 
-/**
- * アカウント作成ページコンポーネント
- * 
- * 要件:
- * - 2.1: アカウント作成ページ（URL='/createaccount'）でemail、password、nameフィールドを持つフォームを表示
- * - 2.2: emailが適切なメール形式であることを検証
- * - 2.3: passwordがアルファベットと数字のみで構成され、4-20文字であることを検証
- * - 2.4: nameがアルファベットまたは日本語文字のみで構成され、1-20文字であることを検証
- * - 2.5: emailが既に存在する場合、「既に登録されているメールアドレスです」を表示
- */
+// 会員登録ページ
+
 export const CreateAccountPage: React.FC = () => {
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();

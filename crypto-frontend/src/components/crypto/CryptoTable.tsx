@@ -8,19 +8,25 @@ interface CryptoTableProps {
   coins: Coin[];
   loading?: boolean;
   error?: string | null;
+  showBookmarkButtons?: boolean;
 }
 
 export const CryptoTable: React.FC<CryptoTableProps> = React.memo(({ 
   coins, 
   loading = false, 
-  error = null 
+  error = null,
+  showBookmarkButtons = false
 }) => {
   const { t } = useTranslation();
 
   const memoizedRows = useMemo(() => 
     coins.map((coin) => (
-      <CryptoRow key={coin.id} coin={coin} />
-    )), [coins]
+      <CryptoRow 
+        key={coin.id} 
+        coin={coin} 
+        showBookmarkButton={showBookmarkButtons}
+      />
+    )), [coins, showBookmarkButtons]
   );
 
   if (loading) {
@@ -58,6 +64,7 @@ export const CryptoTable: React.FC<CryptoTableProps> = React.memo(({
             <th>{t('crypto.high24h')}</th>
             <th>{t('crypto.change24h')}</th>
             <th>{t('crypto.marketCap')}</th>
+            {showBookmarkButtons && <th>{t('crypto.bookmark')}</th>}
           </tr>
         </thead>
         <tbody>
