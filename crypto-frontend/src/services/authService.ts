@@ -33,15 +33,12 @@ export const authService = {
       return response.data;
     } catch (error) {
       // APIエラーの場合はそのまま再スロー
-      if (error instanceof ApiError) {
-        throw error;
-      }
       
       // その他のエラーの場合は適切なエラーメッセージに変換
       const apiError = error as any;
-      if (apiError.response?.status === 401) {
+      if (apiError.status === 401) {
         throw new ApiError('メールアドレスまたはパスワードが正しくありません', 401);
-      } else if (apiError.response?.status === 400) {
+      } else if (apiError.status === 400) {
         throw new ApiError(apiError.response.data?.error || 'ログイン情報が正しくありません', 400);
       } else {
         throw new ApiError('ログインに失敗しました。しばらく時間をおいて再度お試しください', 500);
@@ -100,17 +97,11 @@ export const authService = {
       return response.data;
     } catch (error) {
       // APIエラーの場合はそのまま再スロー
-      if (error instanceof ApiError) {
-        throw error;
-      }
-      
+
       // その他のエラーの場合は適切なエラーメッセージに変換
       const apiError = error as any;
-      if (apiError.response?.status === 400) {
-        const errorMessage = apiError.response.data?.error;
-        if (errorMessage && (errorMessage.includes('email') || errorMessage.includes('Email'))) {
-          throw new ApiError('既に登録されているメールアドレスです', 400);
-        }
+      if (apiError.status === 400) {
+        const errorMessage = apiError.details.errors.email[0];
         throw new ApiError(errorMessage || '登録情報が正しくありません', 400);
       } else {
         throw new ApiError('アカウント作成に失敗しました。しばらく時間をおいて再度お試しください', 500);
