@@ -73,3 +73,6 @@ pip-delete-this-directory.txt
 *.sqlite3
 
 *.md
+
+# CI/CD workflow
+.github/workflows
