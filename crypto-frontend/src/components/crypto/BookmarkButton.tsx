@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
 import { bookmarkService } from '../../services/bookmarkService';
 import './BookmarkButton.css';
+import BookmarkIconTrue from '../../statics/bookmark-true.svg';
+import BookmartIconFalse from '../../statics/bookmark-false.svg';
 
 interface BookmarkButtonProps {
   coinId: string;
@@ -111,10 +113,7 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = React.memo(({
         title={buttonText}
       >
         <span className="bookmark-button__icon">
-          {isBookmarked ? '★' : '☆'}
-        </span>
-        <span className="bookmark-button__text">
-          {loading ? t('common.loading') : buttonText}
+          {isBookmarked ? <img src={BookmarkIconTrue} width={30} height={30} /> : <img src={BookmartIconFalse} width={30} height={30} />}
         </span>
       </button>
       

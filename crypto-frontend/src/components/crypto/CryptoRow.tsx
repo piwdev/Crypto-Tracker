@@ -20,7 +20,7 @@ export const CryptoRow: React.FC<CryptoRowProps> = React.memo(({ coin, onClick, 
     if ((event.target as HTMLElement).closest('.bookmark-button-container')) {
       return;
     }
-    
+
     if (onClick) {
       onClick(coin.id);
     } else {

@@ -3,12 +3,11 @@
 .bookmark-button-container {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 0.5rem;
 }
 
 .bookmark-button {
-  display: flex;
   align-items: center;
   gap: 0.5rem;
   padding: 0.75rem 1rem;
@@ -20,7 +19,6 @@
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
-  min-width: 120px;
   justify-content: center;
 }
 
@@ -41,11 +39,6 @@
 }
 
 /* Not bookmarked state */
-.bookmark-button--not-bookmarked {
-  border-color: #007bff;
-  background-color: #ffffff;
-  color: #007bff;
-}
 
 .bookmark-button--not-bookmarked:hover:not(:disabled) {
   background-color: #007bff;
@@ -57,12 +50,6 @@
 }
 
 /* Bookmarked state */
-.bookmark-button--bookmarked {
-  border-color: #28a745;
-  background-color: #28a745;
-  color: #ffffff;
-}
-
 .bookmark-button--bookmarked:hover:not(:disabled) {
   background-color: #dc3545;
   border-color: #dc3545;

@@ -5,10 +5,12 @@ import { LoadingSpinner, ErrorMessage, Pagination } from '../components/common';
 import { cryptoService } from '../services/cryptoService';
 import { Coin } from '../types/crypto';
 import { calculatePageIndices } from '../utils/pagination';
+import { useAuth } from '../contexts/AuthContext';
 import './ListPage.css';
 
 export const ListPage: React.FC = React.memo(() => {
   const { t } = useTranslation();
+  const { isAuthenticated } = useAuth();
   const [coins, setCoins] = useState<Coin[]>([]);
   const [lastupdatetime, setLastupdatetime] = useState<string>('-');
   const [loading, setLoading] = useState<boolean>(true);
@@ -95,7 +97,7 @@ export const ListPage: React.FC = React.memo(() => {
           coins={paginatedData}
           loading={loading}
           error={error}
-          showBookmarkButtons={true}
+          showBookmarkButtons={isAuthenticated ? true : false}
         />
         
         {/* Pagination component - only show when there are coins and no error */}
