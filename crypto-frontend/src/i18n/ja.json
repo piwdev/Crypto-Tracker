@@ -129,6 +129,8 @@
     "backToHome": "ホームに戻る"
   },
   "footer": {
-    "dataSource": "このサイトのデータは https://www.coingecko.com のデータを利用しています"
+    "aboutSite" : "データソース: \r\n準拠規約: 本サイトはCoinGeckoの利用規約に基づき開発・運営されています。\r\n著作権: 表示されるデータに関する著作権および全ての権利は、情報提供元であるCoinGeckoに帰属します。\r\n当サイトのお問い合わせ先 : E-mail(parkinwoo@parkinwoo.dev)",
+    "dataSource": "CoinGecko API",
+    "dataSourceURL": "https://www.coingecko.com/en/api"
   }
 }
