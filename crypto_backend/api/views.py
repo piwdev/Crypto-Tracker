@@ -128,7 +128,7 @@ def logout_view(request):
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
-def coin_list(request):
+def coin_top10_list(request):
     """
     Get list of cryptocurrencies with market cap rank 1-10
     
@@ -154,6 +154,32 @@ def coin_list(request):
             'count': len(serializer.data)
         }, status=status.HTTP_200_OK)
         
+    except Exception as e:
+        return Response({
+            'error': 'サーバーエラーが発生しました'
+        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def coin_list(request):
+    """
+    Get list of whole cryptocurrencies
+    GET /api/coins/list
+    
+    returns:
+    - 200: 
+    - 500:
+    """
+    try:
+        coins = Coin.objects.all()
+        
+        serializer = CoinListSerializer(coins, many=True)
+        
+        return Response({
+            'data': serializer.data,
+            'count': len(serializer.data)
+        }, status=status.HTTP_200_OK)
+    
     except Exception as e:
         return Response({
             'error': 'サーバーエラーが発生しました'

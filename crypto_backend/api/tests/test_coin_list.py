@@ -15,7 +15,7 @@ class CoinListAPITest(TestCase):
     def setUp(self):
         """Set up test data"""
         self.client = APIClient()
-        self.url = reverse('coin_list')
+        self.url = reverse('conin_top10_list')
         
         # Create test coins with various market cap ranks
         test_coins = [
@@ -38,7 +38,7 @@ class CoinListAPITest(TestCase):
             coin_data['last_updated'] = timezone.now()
             Coin.objects.create(**coin_data)
 
-    def test_coin_list_success(self):
+    def test_conin_top10_list_success(self):
         """Test successful retrieval of coin list"""
         response = self.client.get(self.url)
         
@@ -50,7 +50,7 @@ class CoinListAPITest(TestCase):
         self.assertEqual(response.data['count'], 10)
         self.assertEqual(len(response.data['data']), 10)
 
-    def test_coin_list_filtering(self):
+    def test_conin_top10_list_filtering(self):
         """Test that only coins with market_cap_rank 1-10 are returned"""
         response = self.client.get(self.url)
         
@@ -61,7 +61,7 @@ class CoinListAPITest(TestCase):
             self.assertGreaterEqual(coin['market_cap_rank'], 1)
             self.assertLessEqual(coin['market_cap_rank'], 10)
 
-    def test_coin_list_ordering(self):
+    def test_conin_top10_list_ordering(self):
         """Test that coins are ordered by market_cap_rank ascending"""
         response = self.client.get(self.url)
         
@@ -72,7 +72,7 @@ class CoinListAPITest(TestCase):
             expected_rank = i + 1
             self.assertEqual(coin['market_cap_rank'], expected_rank)
 
-    def test_coin_list_required_fields(self):
+    def test_conin_top10_list_required_fields(self):
         """Test that response contains all required fields"""
         response = self.client.get(self.url)
         
@@ -86,7 +86,7 @@ class CoinListAPITest(TestCase):
             for field in required_fields:
                 self.assertIn(field, coin)
 
-    def test_coin_list_no_extra_fields(self):
+    def test_conin_top10_list_no_extra_fields(self):
         """Test that response doesn't contain extra fields"""
         response = self.client.get(self.url)
         
@@ -100,7 +100,7 @@ class CoinListAPITest(TestCase):
             actual_fields = set(coin.keys())
             self.assertEqual(actual_fields, expected_fields)
 
-    def test_coin_list_empty_database(self):
+    def test_conin_top10_list_empty_database(self):
         """Test response when no coins exist in database"""
         # Delete all coins
         Coin.objects.all().delete()
@@ -111,7 +111,7 @@ class CoinListAPITest(TestCase):
         self.assertEqual(response.data['count'], 0)
         self.assertEqual(len(response.data['data']), 0)
 
-    def test_coin_list_method_not_allowed(self):
+    def test_conin_top10_list_method_not_allowed(self):
         """Test that only GET method is allowed"""
         # Test POST method
         response = self.client.post(self.url, {})
