@@ -14,7 +14,7 @@ import {
   GlobalErrorNotification,
   NetworkStatus 
 } from './components/common';
-import { HomePage, LoginPage, CreateAccountPage, DetailPage, MyPage, NotFoundPage } from './pages';
+import { HomePage, LoginPage, CreateAccountPage, DetailPage, ListPage, MyPage, NotFoundPage } from './pages';
 
 function App() {
   return (
@@ -30,7 +30,8 @@ function App() {
               {/* Public routes */}
               <Route path="/" element={<HomePage />} />
               <Route path="/detail/:coinId" element={<DetailPage />} />
-              
+              <Route path="/list" element={<ListPage />} />
+
               {/* Auth routes - redirect authenticated users */}
               <Route path="/login" element={
                 <AuthRedirect>

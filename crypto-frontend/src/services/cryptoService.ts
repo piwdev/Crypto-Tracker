@@ -5,9 +5,57 @@ import { ApiError } from '../types/api';
 export const cryptoService = {
   // 仮想通貨リスト取得（上位10位）
   // 要件 1.1: market_cap_rank 1-10の仮想通貨を表示
-  getCoinList: async (): Promise<CoinListResponse> => {
+  getCoinListTop10: async (): Promise<CoinListResponse> => {
     try {
-      const response = await api.getWithRetry('/coins/', undefined, {
+      const response = await api.getWithRetry('/coins/top10', undefined, {
+        retries: 3,
+        retryCondition: (error) => !error.response || error.response.status >= 500
+      });
+      
+      // レスポンスデータの検証
+      if (!response.data || !response.data.data) {
+        throw new ApiError('Invalid response format from server', 500);
+      }
+
+      // データが配列であることを確認
+      if (!Array.isArray(response.data.data)) {
+        throw new ApiError('Expected array of coins but received different format', 500);
+      }
+
+      return response.data;
+    } catch (error: unknown) {
+      // ApiErrorの場合はそのまま再スロー
+      if (error instanceof ApiError) {
+        throw error;
+      }
+
+      // ネットワークエラーやその他のエラーの場合
+      if (error && typeof error === 'object' && 'code' in error && error.code === 'NETWORK_ERROR') {
+        throw new ApiError('ネットワークエラーが発生しました。インターネット接続を確認してください。', 0);
+      }
+
+      if (error && typeof error === 'object' && 'message' in error && typeof error.message === 'string' && error.message.includes('Network Error')) {
+        throw new ApiError('ネットワークエラーが発生しました。インターネット接続を確認してください。', 0);
+      }
+
+      // タイムアウトエラー
+      if (error && typeof error === 'object' && 'code' in error && error.code === 'ECONNABORTED') {
+        throw new ApiError('リクエストがタイムアウトしました。しばらく時間をおいて再試行してください。', 408);
+      }
+
+      if (error && typeof error === 'object' && 'message' in error && typeof error.message === 'string' && error.message.includes('timeout')) {
+        throw new ApiError('リクエストがタイムアウトしました。しばらく時間をおいて再試行してください。', 408);
+      }
+
+      // その他の予期しないエラー
+      throw new ApiError('仮想通貨データの取得中にエラーが発生しました。', 500, error);
+    }
+  },
+
+  // 仮想通貨リスト取得 (DBにあるもの全部)
+  getCoinWholeList: async (): Promise<CoinListResponse> => {
+    try {
+      const response = await api.getWithRetry('/coins/list', undefined, {
         retries: 3,
         retryCondition: (error) => !error.response || error.response.status >= 500
       });
@@ -61,7 +109,7 @@ export const cryptoService = {
         throw new ApiError('有効なコインIDを指定してください。', 400);
       }
 
-      const response = await api.getWithRetry(`/coins/${encodeURIComponent(coinId.trim())}/`, undefined, {
+      const response = await api.getWithRetry(`/coins/detail/${encodeURIComponent(coinId.trim())}/`, undefined, {
         retries: 3,
         retryCondition: (error) => !error.response || error.response.status >= 500
       });

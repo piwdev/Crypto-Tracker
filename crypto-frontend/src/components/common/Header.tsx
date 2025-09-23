@@ -38,6 +38,12 @@ const Header: React.FC = React.memo(() => {
               </Link>
             </li>
 
+            <li className="header__nav-item">
+              <Link to="/list" className="header__nav-link">
+                {t('navigation.list')}
+              </Link>
+            </li>
+
             {/* Authenticated user navigation */}
             {isAuthenticated && (
               <li className="header__nav-item">

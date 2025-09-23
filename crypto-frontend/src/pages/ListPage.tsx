@@ -4,21 +4,21 @@ import { CryptoTable } from '../components/crypto';
 import { LoadingSpinner, ErrorMessage } from '../components/common';
 import { cryptoService } from '../services/cryptoService';
 import { Coin } from '../types/crypto';
-import './HomePage.css';
+import './ListPage.css';
 
-export const HomePage: React.FC = React.memo(() => {
+export const ListPage: React.FC = React.memo(() => {
   const { t } = useTranslation();
   const [coins, setCoins] = useState<Coin[]>([]);
   const [lastupdatetime, setLastupdatetime] = useState<string>('-');
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchTopCryptocurrencies = useCallback(async () => {
+  const fetchWholeCryptocurrencies = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
       const [response, lastupdate_response] = await Promise.all([
-        cryptoService.getCoinListTop10(),
+        cryptoService.getCoinWholeList(),
         cryptoService.getCoinDetail('bitcoin')
       ]);
       setCoins(response.data);
@@ -34,23 +34,23 @@ export const HomePage: React.FC = React.memo(() => {
   }, [t]);
 
   useEffect(() => {
-    fetchTopCryptocurrencies();
-  }, [fetchTopCryptocurrencies]);
+    fetchWholeCryptocurrencies();
+  }, [fetchWholeCryptocurrencies]);
 
   const pageHeader = useMemo(() => (
-    <div className="home-page-header">
-      <h1>{t('crypto.topCryptocurrencies')}</h1>
-      <p className="home-page-description">
-        {t('navigation.home')} - {t('crypto.topCryptocurrencies')}
+    <div className="list-page-header">
+      <h1>{t('crypto.cryptoList')}</h1>
+      <p className="list-page-description">
+        {t('navigation.list')}
       </p>
       <p>{t('crypto.lastUpdated')} {lastupdatetime} </p>
-      <p className="home-page-description">{t('crypto.refreshInterval')}</p>
+      <p className="list-page-description">{t('crypto.refreshInterval')}</p>
     </div>
   ), [t, lastupdatetime]);
 
   if (loading) {
     return (
-      <div className="home-page">
+      <div className="list-page">
         {pageHeader}
         <LoadingSpinner />
       </div>
@@ -59,7 +59,7 @@ export const HomePage: React.FC = React.memo(() => {
 
   if (error) {
     return (
-      <div className="home-page">
+      <div className="list-page">
         {pageHeader}
         <ErrorMessage message={error} />
       </div>
@@ -67,10 +67,10 @@ export const HomePage: React.FC = React.memo(() => {
   }
 
   return (
-    <div className="home-page">
+    <div className="list-page">
       {pageHeader}
 
-      <div className="home-page-content">
+      <div className="list-page-content">
         <CryptoTable
           coins={coins}
           loading={loading}

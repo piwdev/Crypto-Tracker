@@ -18,7 +18,8 @@
     "login": "Login",
     "logout": "Logout",
     "myPage": "My Page",
-    "createAccount": "Create Account"
+    "createAccount": "Create Account",
+    "list": "List"
   },
   "auth": {
     "email": "Email",
@@ -65,6 +66,7 @@
     "removeBookmark": "Remove Bookmark",
     "bookmarked": "Bookmarked",
     "topCryptocurrencies": "Top 10 Cryptocurrencies",
+    "cryptoList": "Cryptocurrency List",
     "cryptoDetails": "Cryptocurrency Details",
     "myBookmarks": "My Bookmarks",
     "noBookmarks": "No bookmarks yet",
