@@ -44,6 +44,7 @@ export const HomePage: React.FC = React.memo(() => {
         {t('navigation.home')} - {t('crypto.topCryptocurrencies')}
       </p>
       <p>{t('crypto.lastUpdated')} {lastupdatetime} </p>
+      <p className="home-page-description">{t('crypto.refreshInterval')}</p>
     </div>
   ), [t, lastupdatetime]);
 

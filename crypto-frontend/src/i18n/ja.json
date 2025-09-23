@@ -88,7 +88,8 @@
     "atlDate": "最安値更新日",
     "lastUpdated": "最終更新",
     "symbol": "シンボル",
-    "notAvailable": "N/A"
+    "notAvailable": "N/A",
+    "refreshInterval": "データは30分ごとに更新されます。"
   },
   "user": {
     "profile": "プロフィール",

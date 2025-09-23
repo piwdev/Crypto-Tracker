@@ -88,7 +88,8 @@
     "atlDate": "ATL Date",
     "lastUpdated": "Last Updated",
     "symbol": "Symbol",
-    "notAvailable": "N/A"
+    "notAvailable": "N/A",
+    "refreshInterval": "Data is updated every 30 minutes."
   },
   "user": {
     "profile": "Profile",
