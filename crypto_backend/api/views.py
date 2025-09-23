@@ -97,7 +97,7 @@ def login_view(request):
     
     return Response({
         'errors': serializer.errors
-    }, status=status.HTTP_401_BAD_REQUEST)
+    }, status=status.HTTP_401_UNAUTHORIZED)
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
