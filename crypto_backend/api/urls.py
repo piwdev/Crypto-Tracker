@@ -9,7 +9,7 @@ urlpatterns = [
     
     # Cryptocurrency endpoints
     path('coins/top10', views.coin_top10_list, name='coin_top10_list'),
-    path('coins/<str:coin_id>/', views.coin_detail, name='coin_detail'),
+    path('coins/detail/<str:coin_id>/', views.coin_detail, name='coin_detail'),
     path('coins/list', views.coin_list, name='coin_list'),
     
     # Bookmark endpoints
