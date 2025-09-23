@@ -4,7 +4,7 @@ import { ApiError } from '../types/api';
 
 export const cryptoService = {
   // 仮想通貨リスト取得（上位10位）
-  // 要件 1.1: market_cap_rank 1-10の仮想通貨を表示
+  // market_cap_rank 1-10の仮想通貨を表示
   getCoinListTop10: async (): Promise<CoinListResponse> => {
     try {
       const response = await api.getWithRetry('/coins/top10', undefined, {
@@ -101,7 +101,7 @@ export const cryptoService = {
   },
 
   // 特定の仮想通貨詳細取得
-  // 要件 5.1: 指定されたcoin_idのcoinsテーブルのすべての列を表示
+  // 指定されたcoin_idのcoinsテーブルのすべての列を表示
   getCoinDetail: async (coinId: string): Promise<CoinDetailResponse> => {
     try {
       // coinIdの検証

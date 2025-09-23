@@ -4,7 +4,7 @@ import { BookmarkResponse, CoinListResponse } from '../types/crypto';
 export const bookmarkService = {
   /**
    * ブックマーク追加
-   * 要件 6.3: ユーザーがブックマークボタンをクリックした時、システムはuser_idとcoin_idでbookmarksテーブルにレコードを追加すること
+   * ユーザーがブックマークボタンをクリックした時、user_idとcoin_idでbookmarksテーブルにレコードを追加
    * 
    * @param coinId - ブックマークする仮想通貨のID
    * @returns Promise<BookmarkResponse> - ブックマーク作成結果
@@ -32,7 +32,7 @@ export const bookmarkService = {
 
   /**
    * ブックマーク削除
-   * 要件 6.4: ユーザーがブックマーク解除ボタンをクリックした時、システムはbookmarksテーブルから対応するレコードを削除すること
+   * ユーザーがブックマーク解除ボタンをクリックした時、bookmarksテーブルから対応するレコードを削除
    * 
    * @param coinId - ブックマーク解除する仮想通貨のID
    * @returns Promise<void>
