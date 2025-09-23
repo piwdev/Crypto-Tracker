@@ -17,12 +17,14 @@ export const HomePage: React.FC = React.memo(() => {
     try {
       setLoading(true);
       setError(null);
-      const response = await cryptoService.getCoinList();
+      const [response, lastupdate_response] = await Promise.all([
+        cryptoService.getCoinList(),
+        cryptoService.getCoinDetail('bitcoin')
+      ]);
       setCoins(response.data);
       // get last update time
-      const lastupdate_response = await cryptoService.getCoinDetail('bitcoin');
       const d = lastupdate_response.data.updated_at;
-      setLastupdatetime(`${d.substring(0,10)} ${d.substring(11, 19)} ${d.substring(26,32)}`);
+      setLastupdatetime(`${d.substring(0, 10)} ${d.substring(11, 19)} ${d.substring(26, 32)}`);
     } catch (err: any) {
       console.error('Error fetching cryptocurrencies:', err);
       setError(err.message || t('errors.serverError'));
@@ -43,7 +45,7 @@ export const HomePage: React.FC = React.memo(() => {
       </p>
       <p>{t('crypto.lastUpdated')} {lastupdatetime} </p>
     </div>
-  ), [t]);
+  ), [t, lastupdatetime]);
 
   if (loading) {
     return (
@@ -66,12 +68,12 @@ export const HomePage: React.FC = React.memo(() => {
   return (
     <div className="home-page">
       {pageHeader}
-      
+
       <div className="home-page-content">
-        <CryptoTable 
-          coins={coins} 
-          loading={loading} 
-          error={error} 
+        <CryptoTable
+          coins={coins}
+          loading={loading}
+          error={error}
         />
       </div>
     </div>
