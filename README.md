@@ -1,4 +1,4 @@
-# crypto-checker
+# crypto-tracker
 暗号通貨の価格をチェックできるサイト。ユーザーはお気に入りコインをブックマークできる。
 this is service to check cryptocurrency(coins)
 
