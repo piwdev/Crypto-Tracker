@@ -4,7 +4,7 @@ import sys
 import django
 
 # Add the project directory to the Python path
-sys.path.append('/Users/macair/dev/coin-watcher/crypto_backend')
+sys.path.append(f'{os.environ.get("PATH_FOR_TEST")}/crypto_backend')
 
 # Set up Django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'crypto_backend.test_settings')
