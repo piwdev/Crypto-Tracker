@@ -39,3 +39,137 @@ pw : password
   - Lambdaは30分間隔で実行されるようにEventBridgeで設定
 
 <img width="2508" height="1682" alt="image" src="https://github.com/user-attachments/assets/5a1b4f9c-3bf6-4725-86b0-960ae4683849" />
+
+**USE PYTHON 3.11 !!!**
+
+# Local Setting Guide
+for who wants to run this app in localhost
+
+## Front Setting
+Run command in terminal
+``` bash
+# 1. move directory
+cd Crypto-Tracker/crypto-frontend
+# 2. install
+npm install
+# 3. run dev
+npm run start
+# the app will run in localhost:3000
+```
+---
+
+## Backend Setting
+
+```bash
+cd Crypto-Tracker
+python3.11 -m venv .venv
+source .venv/bin/activate
+# there should be '(.venv)' in front of your pc's name
+# ex) (.venv) macair@User-MacBookAir
+pip install -r requirements.txt
+cd crypto_backend
+
+# Create superuser (optional)
+python manage.py createsuperuser
+
+# Run development server
+python manage.py runserver
+# the backend will run in localhost:8000
+```
+---
+
+## DB Setting
+
+Require Docker/Docker compose
+
+1. Run Docker Container for PostgreSQL
+
+```bash
+cd Crypto-Tracker
+docker-compose up -d postgres
+```
+<br>
+2. Run Shell Script for initial migration
+Not Neccessary but recommended.
+This will create superuser for DB and run django migration.
+
+```bash
+# allow script
+chmod +x setup-postgres.sh
+./setup-postgres.sh
+```
+<br>
+3. Manual Migration (venv)
+Make sure you already set Backend before this step.
+```bash
+cd Crypto-Tracker
+source .venv/bin/activate
+python3 manage.py makemigrations
+python3 manage.py migrate
+```
+<br>
+4. DB information（default）
+
+- Host: localhost
+- Port: 5432
+- Database: crypto_db
+- Username: postgres
+- Password: password
+
+---
+
+## Environment Variables
+
+Create a `.env` file in the `crypto_backend` directory with the following variables:
+
+```env
+# Database
+DB_NAME=crypto_db
+DB_USER=postgres
+DB_PASSWORD=password
+DB_HOST=localhost
+DB_PORT=5432
+
+# Django
+SECRET_KEY=your-secret-key-here
+DEBUG=True
+ALLOWED_HOSTS=localhost,127.0.0.1
+
+# CoinGecko API
+COINGECKO_API_KEY=your-coingecko-api-key
+
+# CORS (for frontend connection)
+CORS_ALLOWED_ORIGINS=http://localhost:3000
+```
+
+---
+
+## Lambda Function Setup (Optional)
+
+The Lambda function fetches cryptocurrency data from CoinGecko API and stores it in the database.
+
+```bash
+cd Crypto-Tracker/lambda
+pip install -r requirements.txt -t .
+# Deploy to AWS Lambda manually or use AWS CLI/SAM
+```
+
+**Lambda Environment Variables:**
+- `DB_HOST`: Your RDS endpoint
+- `DB_NAME`: crypto_db
+- `DB_USER`: postgres
+- `DB_PASSWORD`: your-db-password
+- `COINGECKO_API_KEY`: your-api-key
+
+---
+
+## Testing the Setup
+
+1. **Start PostgreSQL**: `docker-compose up -d postgres`
+2. **Start Backend**: `cd crypto_backend && python manage.py runserver`
+3. **Start Frontend**: `cd crypto-frontend && npm start`
+4. **Access the app**: http://localhost:3000
+
+**API Endpoints:**
+- Backend API: http://localhost:8000/api/
+- Admin Panel: http://localhost:8000/admin/
