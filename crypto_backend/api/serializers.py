@@ -2,7 +2,8 @@ from rest_framework import serializers
 from django.contrib.auth import authenticate
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError as DjangoValidationError
-from .models import User, Coin, Bookmark
+from .models import User, Coin, Bookmark, BankBalance, Wallet, TradeHistory
+from decimal import Decimal
 import re
 
 
@@ -165,3 +166,188 @@ class BookmarkCreateSerializer(serializers.Serializer):
         
         bookmark = Bookmark.objects.create(user=user, coin=coin)
         return bookmark
+
+
+
+class TradeBuySerializer(serializers.Serializer):
+    """
+    Serializer for buy trade requests with validation
+    """
+    coin_id = serializers.CharField(max_length=50)
+    quantity = serializers.DecimalField(max_digits=20, decimal_places=8)
+    
+    def validate_coin_id(self, value):
+        """
+        Validate that the coin exists
+        """
+        try:
+            Coin.objects.get(id=value)
+        except Coin.DoesNotExist:
+            raise serializers.ValidationError("指定されたコインが見つかりません")
+        return value
+    
+    def validate_quantity(self, value):
+        """
+        Validate that quantity is positive and has max 8 decimal places
+        """
+        if value <= 0:
+            raise serializers.ValidationError("数量は正の数である必要があります")
+        
+        # Check decimal places (max 8)
+        if value.as_tuple().exponent < -8:
+            raise serializers.ValidationError("数量は小数点以下8桁までです")
+        
+        return value
+    
+    def validate(self, attrs):
+        """
+        Validate that user has sufficient balance
+        """
+        user = self.context['request'].user
+        coin_id = attrs['coin_id']
+        quantity = attrs['quantity']
+        
+        # Get coin and calculate total cost
+        try:
+            coin = Coin.objects.get(id=coin_id)
+        except Coin.DoesNotExist:
+            raise serializers.ValidationError("指定されたコインが見つかりません")
+        
+        if coin.current_price is None:
+            raise serializers.ValidationError("コインの価格情報が利用できません")
+        
+        total_cost = quantity * coin.current_price
+        
+        # Check user's bank balance
+        try:
+            bank_balance = BankBalance.objects.get(user=user)
+        except BankBalance.DoesNotExist:
+            raise serializers.ValidationError("銀行残高が見つかりません")
+        
+        if bank_balance.cash_balance < total_cost:
+            raise serializers.ValidationError("残高が不足しています")
+        
+        return attrs
+
+
+class TradeSellSerializer(serializers.Serializer):
+    """
+    Serializer for sell trade requests with validation
+    """
+    coin_id = serializers.CharField(max_length=50)
+    quantity = serializers.DecimalField(max_digits=20, decimal_places=8)
+    
+    def validate_coin_id(self, value):
+        """
+        Validate that the coin exists
+        """
+        try:
+            Coin.objects.get(id=value)
+        except Coin.DoesNotExist:
+            raise serializers.ValidationError("指定されたコインが見つかりません")
+        return value
+    
+    def validate_quantity(self, value):
+        """
+        Validate that quantity is positive and has max 8 decimal places
+        """
+        if value <= 0:
+            raise serializers.ValidationError("数量は正の数である必要があります")
+        
+        # Check decimal places (max 8)
+        if value.as_tuple().exponent < -8:
+            raise serializers.ValidationError("数量は小数点以下8桁までです")
+        
+        return value
+    
+    def validate(self, attrs):
+        """
+        Validate that user owns the coin and has sufficient quantity
+        """
+        user = self.context['request'].user
+        coin_id = attrs['coin_id']
+        quantity = attrs['quantity']
+        
+        # Check if user owns the coin
+        try:
+            wallet = Wallet.objects.get(user=user, coin_id=coin_id)
+        except Wallet.DoesNotExist:
+            raise serializers.ValidationError("このコインを保有していません")
+        
+        # Check if user has sufficient quantity
+        if wallet.quantity < quantity:
+            raise serializers.ValidationError("保有数量が不足しています")
+        
+        return attrs
+
+
+class WalletSerializer(serializers.ModelSerializer):
+    """
+    Serializer for wallet data with computed current_value field
+    """
+    coin_id = serializers.CharField(source='coin.id', read_only=True)
+    coin_name = serializers.CharField(source='coin.name', read_only=True)
+    coin_symbol = serializers.CharField(source='coin.symbol', read_only=True)
+    coin_image = serializers.CharField(source='coin.image', read_only=True)
+    current_price = serializers.DecimalField(
+        source='coin.current_price',
+        max_digits=1000,
+        decimal_places=50,
+        read_only=True
+    )
+    current_value = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = Wallet
+        fields = [
+            'coin_id',
+            'coin_name',
+            'coin_symbol',
+            'coin_image',
+            'quantity',
+            'current_price',
+            'current_value',
+            'last_updated_at'
+        ]
+    
+    def get_current_value(self, obj):
+        """
+        Calculate current value as quantity × current_price
+        """
+        if obj.coin.current_price is not None:
+            return obj.quantity * obj.coin.current_price
+        return Decimal('0')
+
+
+class TradeHistorySerializer(serializers.ModelSerializer):
+    """
+    Serializer for trade history records with coin details
+    """
+    coin_id = serializers.CharField(source='coin.id', read_only=True)
+    coin_name = serializers.CharField(source='coin.name', read_only=True)
+    coin_symbol = serializers.CharField(source='coin.symbol', read_only=True)
+    
+    class Meta:
+        model = TradeHistory
+        fields = [
+            'id',
+            'coin_id',
+            'coin_name',
+            'coin_symbol',
+            'trade_type',
+            'trade_quantity',
+            'trade_price_per_coin',
+            'balance_before_trade',
+            'balance_after_trade',
+            'created_at'
+        ]
+
+
+class PortfolioSerializer(serializers.Serializer):
+    """
+    Serializer for complete portfolio with computed totals
+    """
+    bank_balance = serializers.DecimalField(max_digits=1000, decimal_places=50)
+    wallets = WalletSerializer(many=True)
+    total_portfolio_value = serializers.DecimalField(max_digits=1000, decimal_places=50)
+    total_assets = serializers.DecimalField(max_digits=1000, decimal_places=50)

@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useAuth } from '../../contexts/AuthContext';
 import { Coin } from '../../types/crypto';
 import { cryptoService } from '../../services/cryptoService';
+import { tradeService } from '../../services/tradeService';
 import { formatters } from '../../utils/formatters';
 import LoadingSpinner from '../common/LoadingSpinner';
 import ErrorMessage from '../common/ErrorMessage';
 import OptimizedImage from '../common/OptimizedImage';
 import BookmarkButton from './BookmarkButton';
+import { TradeModal } from '../trade/TradeModal';
 import './CryptoDetail.css';
 
 interface CryptoDetailProps {
@@ -15,9 +18,13 @@ interface CryptoDetailProps {
 
 const CryptoDetail: React.FC<CryptoDetailProps> = React.memo(({ coinId }) => {
   const { t } = useTranslation();
+  const { isAuthenticated } = useAuth();
   const [coin, setCoin] = useState<Coin | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [tradeModalOpen, setTradeModalOpen] = useState(false);
+  const [tradeType, setTradeType] = useState<'BUY' | 'SELL'>('BUY');
+  const [userQuantity, setUserQuantity] = useState<number>(0);
 
   const fetchCoinDetail = useCallback(async () => {
     try {
@@ -41,11 +48,38 @@ const CryptoDetail: React.FC<CryptoDetailProps> = React.memo(({ coinId }) => {
     }
   }, [coinId, t]);
 
+  const fetchUserQuantity = useCallback(async () => {
+    if (!isAuthenticated) return;
+
+    try {
+      const portfolio = await tradeService.getPortfolio();
+      const wallet = portfolio.wallets.find(w => w.coin_id === coinId);
+      setUserQuantity(wallet ? parseFloat(wallet.quantity) : 0);
+    } catch (err) {
+      console.error('Error fetching user quantity:', err);
+    }
+  }, [coinId, isAuthenticated]);
+
   useEffect(() => {
     if (coinId) {
       fetchCoinDetail();
+      fetchUserQuantity();
     }
-  }, [coinId, fetchCoinDetail]);
+  }, [coinId, fetchCoinDetail, fetchUserQuantity]);
+
+  const handleBuyClick = () => {
+    setTradeType('BUY');
+    setTradeModalOpen(true);
+  };
+
+  const handleSellClick = () => {
+    setTradeType('SELL');
+    setTradeModalOpen(true);
+  };
+
+  const handleTradeComplete = () => {
+    fetchUserQuantity();
+  };
 
   const formatValue = useCallback((value: number | null | undefined, type: 'currency' | 'percentage' | 'large' | 'number' = 'number'): string => {
     if (value === null || value === undefined) {
@@ -89,9 +123,9 @@ const CryptoDetail: React.FC<CryptoDetailProps> = React.memo(({ coinId }) => {
   if (error) {
     return (
       <div className="crypto-detail__error">
-        <ErrorMessage 
-          message={error} 
-          showRetry 
+        <ErrorMessage
+          message={error}
+          showRetry
           onRetry={fetchCoinDetail}
         />
       </div>
@@ -111,7 +145,7 @@ const CryptoDetail: React.FC<CryptoDetailProps> = React.memo(({ coinId }) => {
       <div className="crypto-detail__header">
         <div className="crypto-detail__title">
           <OptimizedImage
-            src={coin.image} 
+            src={coin.image}
             alt={coin.name}
             className="crypto-detail__image"
             width={48}
@@ -127,12 +161,32 @@ const CryptoDetail: React.FC<CryptoDetailProps> = React.memo(({ coinId }) => {
           <div className="crypto-detail__rank">
             #{coin.market_cap_rank || t('crypto.notAvailable')}
           </div>
-          <BookmarkButton 
+          <BookmarkButton
             coinId={coin.id}
             className="crypto-detail__bookmark-button"
           />
         </div>
       </div>
+
+      {isAuthenticated && (
+        <div className="crypto-detail__trade-section">
+          {userQuantity > 0 && (
+            <div className="crypto-detail__holdings">
+              {t('trade.yourHoldings')}: <strong>{userQuantity.toFixed(8)} {coin.symbol.toUpperCase()}</strong>
+            </div>
+          )}
+          <div className="crypto-detail__trade-buttons">
+            <button className="crypto-detail__trade-button crypto-detail__trade-button--buy" onClick={handleBuyClick}>
+              {t('trade.buy')} {coin.symbol.toUpperCase()}
+            </button>
+            {userQuantity > 0 && (
+              <button className="crypto-detail__trade-button crypto-detail__trade-button--sell" onClick={handleSellClick}>
+                {t('trade.sell')} {coin.symbol.toUpperCase()}
+              </button>
+            )}
+          </div>
+        </div>
+      )}
 
       <div className="crypto-detail__content">
         <div className="crypto-detail__section">
@@ -144,28 +198,28 @@ const CryptoDetail: React.FC<CryptoDetailProps> = React.memo(({ coinId }) => {
                 {formatValue(coin.current_price, 'currency')}
               </span>
             </div>
-            
+
             <div className="crypto-detail__item">
               <span className="crypto-detail__label">{t('crypto.priceChange24h')}</span>
               <span className={`crypto-detail__value ${getChangeClass(coin.price_change_24h)}`}>
                 {formatValue(coin.price_change_24h, 'currency')}
               </span>
             </div>
-            
+
             <div className="crypto-detail__item">
               <span className="crypto-detail__label">{t('crypto.priceChangePercentage24h')}</span>
               <span className={`crypto-detail__value ${getChangeClass(coin.price_change_percentage_24h)}`}>
                 {formatValue(coin.price_change_percentage_24h, 'percentage')}
               </span>
             </div>
-            
+
             <div className="crypto-detail__item">
               <span className="crypto-detail__label">{t('crypto.high24h')}</span>
               <span className="crypto-detail__value">
                 {formatValue(coin.high_24h, 'currency')}
               </span>
             </div>
-            
+
             <div className="crypto-detail__item">
               <span className="crypto-detail__label">{t('crypto.low24h')}</span>
               <span className="crypto-detail__value">
@@ -184,21 +238,21 @@ const CryptoDetail: React.FC<CryptoDetailProps> = React.memo(({ coinId }) => {
                 {formatValue(coin.market_cap, 'large')}
               </span>
             </div>
-            
+
             <div className="crypto-detail__item">
               <span className="crypto-detail__label">{t('crypto.fullyDilutedValuation')}</span>
               <span className="crypto-detail__value">
                 {formatValue(coin.fully_diluted_valuation, 'large')}
               </span>
             </div>
-            
+
             <div className="crypto-detail__item">
               <span className="crypto-detail__label">{t('crypto.marketCapChange24h')}</span>
               <span className={`crypto-detail__value ${getChangeClass(coin.market_cap_change_24h)}`}>
                 {formatValue(coin.market_cap_change_24h, 'large')}
               </span>
             </div>
-            
+
             <div className="crypto-detail__item">
               <span className="crypto-detail__label">{t('crypto.marketCapChangePercentage24h')}</span>
               <span className={`crypto-detail__value ${getChangeClass(coin.market_cap_change_percentage_24h)}`}>
@@ -229,14 +283,14 @@ const CryptoDetail: React.FC<CryptoDetailProps> = React.memo(({ coinId }) => {
                 {formatValue(coin.circulating_supply, 'large')} {coin.symbol.toUpperCase()}
               </span>
             </div>
-            
+
             <div className="crypto-detail__item">
               <span className="crypto-detail__label">{t('crypto.totalSupply')}</span>
               <span className="crypto-detail__value">
                 {coin.total_supply ? `${formatValue(coin.total_supply, 'large')} ${coin.symbol.toUpperCase()}` : t('crypto.notAvailable')}
               </span>
             </div>
-            
+
             <div className="crypto-detail__item">
               <span className="crypto-detail__label">{t('crypto.maxSupply')}</span>
               <span className="crypto-detail__value">
@@ -255,14 +309,14 @@ const CryptoDetail: React.FC<CryptoDetailProps> = React.memo(({ coinId }) => {
                 {formatValue(coin.ath, 'currency')}
               </span>
             </div>
-            
+
             <div className="crypto-detail__item">
               <span className="crypto-detail__label">{t('crypto.athChangePercentage')}</span>
               <span className={`crypto-detail__value ${getChangeClass(coin.ath_change_percentage)}`}>
                 {formatValue(coin.ath_change_percentage, 'percentage')}
               </span>
             </div>
-            
+
             <div className="crypto-detail__item">
               <span className="crypto-detail__label">{t('crypto.athDate')}</span>
               <span className="crypto-detail__value">
@@ -281,14 +335,14 @@ const CryptoDetail: React.FC<CryptoDetailProps> = React.memo(({ coinId }) => {
                 {formatValue(coin.atl, 'currency')}
               </span>
             </div>
-            
+
             <div className="crypto-detail__item">
               <span className="crypto-detail__label">{t('crypto.atlChangePercentage')}</span>
               <span className={`crypto-detail__value ${getChangeClass(coin.atl_change_percentage)}`}>
                 {formatValue(coin.atl_change_percentage, 'percentage')}
               </span>
             </div>
-            
+
             <div className="crypto-detail__item">
               <span className="crypto-detail__label">{t('crypto.atlDate')}</span>
               <span className="crypto-detail__value">
@@ -310,6 +364,20 @@ const CryptoDetail: React.FC<CryptoDetailProps> = React.memo(({ coinId }) => {
           </div>
         </div>
       </div>
+
+      {coin && (
+        <TradeModal
+          isOpen={tradeModalOpen}
+          onClose={() => setTradeModalOpen(false)}
+          coinId={coin.id}
+          coinName={coin.name}
+          coinSymbol={coin.symbol.toUpperCase()}
+          currentPrice={coin.current_price || 0}
+          tradeType={tradeType}
+          maxQuantity={tradeType === 'SELL' ? userQuantity : undefined}
+          onTradeComplete={handleTradeComplete}
+        />
+      )}
     </div>
   );
 });

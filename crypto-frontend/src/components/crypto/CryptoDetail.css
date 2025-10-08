@@ -256,3 +256,79 @@
     color: #9ca3af;
   }
 }
+/*
+ Trade Section */
+.crypto-detail__trade-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.crypto-detail__holdings {
+  color: white;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.crypto-detail__holdings strong {
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.crypto-detail__trade-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.crypto-detail__trade-button {
+  flex: 1;
+  max-width: 200px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.crypto-detail__trade-button--buy {
+  background: #10b981;
+  color: white;
+}
+
+.crypto-detail__trade-button--buy:hover {
+  background: #059669;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.crypto-detail__trade-button--sell {
+  background: #ef4444;
+  color: white;
+}
+
+.crypto-detail__trade-button--sell:hover {
+  background: #dc2626;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+  .crypto-detail__trade-section {
+    padding: 1rem;
+  }
+
+  .crypto-detail__trade-buttons {
+    flex-direction: column;
+  }
+
+  .crypto-detail__trade-button {
+    max-width: 100%;
+  }
+}

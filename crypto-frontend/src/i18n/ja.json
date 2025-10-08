@@ -50,7 +50,8 @@
     "passwordNoNumbers": "パスワードに数字を含めてください",
     "passwordRecommendLonger": "より長いパスワードの使用をお勧めします",
     "usernameTooLong": "ユーザー名が長すぎます",
-    "usernameRecommendLonger": "より長いユーザー名の使用をお勧めします"
+    "usernameRecommendLonger": "より長いユーザー名の使用をお勧めします",
+    "signupBonus": "新しく登録した方にはデモトレード用の仮想通貨$500,000をプレゼント！"
   },
   "crypto": {
     "rank": "順位",
@@ -97,6 +98,33 @@
     "profile": "プロフィール",
     "myBookmarks": "マイブックマーク",
     "accountInfo": "アカウント情報"
+  },
+  "trade": {
+    "portfolio": "ポートフォリオ",
+    "bankBalance": "銀行残高",
+    "portfolioValue": "ポートフォリオ価値",
+    "totalAssets": "総資産",
+    "coin": "コイン",
+    "quantity": "数量",
+    "currentPrice": "現在価格",
+    "currentValue": "現在価値",
+    "noHoldings": "保有コインがありません",
+    "tradeHistory": "取引履歴",
+    "date": "日時",
+    "type": "種類",
+    "price": "価格",
+    "balanceAfter": "取引後残高",
+    "noTrades": "取引履歴がありません",
+    "buy": "購入",
+    "sell": "売却",
+    "totalCost": "合計金額",
+    "totalProceeds": "売却金額",
+    "available": "利用可能",
+    "yourHoldings": "保有数量",
+    "errors": {
+      "invalidQuantity": "有効な数量を入力してください",
+      "insufficientQuantity": "数量が不足しています"
+    }
   },
   "language": {
     "english": "English",
