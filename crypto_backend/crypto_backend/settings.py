@@ -21,18 +21,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config(
-    "SECRET_KEY",
-    default="django-insecure-1p9(eod&p1m_(k-en9r86k)0@#^%6fg(x&o5b-krkrsg@r&k7=",
-)
+SECRET_KEY = config("SECRET_KEY", default=os.environ.get("SECRET_KEY"))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", default=True, cast=bool)
 
 # Configure ALLOWED_HOSTS for both local development and Elastic Beanstalk
-if 'RDS_HOSTNAME' in os.environ:
+if "RDS_HOSTNAME" in os.environ:
     # Elastic Beanstalk deployment - be more permissive for AWS internal traffic
-    ALLOWED_HOSTS = ['*']  # Allow all hosts in production for now
+    ALLOWED_HOSTS = ["*"]  # Allow all hosts in production for now
 else:
     # Local development
     ALLOWED_HOSTS = config(
@@ -93,16 +90,16 @@ WSGI_APPLICATION = "crypto_backend.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 # Database configuration for both local development and Elastic Beanstalk
-if 'RDS_HOSTNAME' in os.environ:
+if "RDS_HOSTNAME" in os.environ:
     # Elastic Beanstalk RDS configuration
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.environ['RDS_DB_NAME'],
-            'USER': os.environ['RDS_USERNAME'],
-            'PASSWORD': os.environ['RDS_PASSWORD'],
-            'HOST': os.environ['RDS_HOSTNAME'],
-            'PORT': os.environ['RDS_PORT'],
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.environ["RDS_DB_NAME"],
+            "USER": os.environ["RDS_USERNAME"],
+            "PASSWORD": os.environ["RDS_PASSWORD"],
+            "HOST": os.environ["RDS_HOSTNAME"],
+            "PORT": os.environ["RDS_PORT"],
         }
     }
 else:
