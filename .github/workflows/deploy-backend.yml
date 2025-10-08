@@ -33,7 +33,10 @@ jobs:
         python -m py_compile crypto_backend/settings.py
         python -m py_compile crypto_backend/urls.py
         python -m py_compile api/models.py
-        python -m py_compile api/views.py
+        python -m py_compile api/views/authentication_views.py
+        python -m py_compile api/views/crypto_views.py
+        python -m py_compile api/views/bookmark_views.py
+        python -m py_compile api/views/trade_views.py
         echo "✅ Python syntax checks passed"
         
         # Try to run Django checks
