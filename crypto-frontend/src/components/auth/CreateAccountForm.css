@@ -23,6 +23,19 @@
   color: #1f2937;
 }
 
+.signup-bonus-message {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  padding: 16px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 500;
+  font-size: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.2);
+  line-height: 1.5;
+}
+
 .create-account-form {
   display: flex;
   flex-direction: column;

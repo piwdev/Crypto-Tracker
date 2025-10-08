@@ -50,7 +50,8 @@
     "passwordNoNumbers": "Password should contain numbers",
     "passwordRecommendLonger": "Consider using a longer password",
     "usernameTooLong": "Username is too long",
-    "usernameRecommendLonger": "Consider using a longer username"
+    "usernameRecommendLonger": "Consider using a longer username",
+    "signupBonus": "Sign up now and receive $500,000 in virtual currency for demo trading!"
   },
   "crypto": {
     "rank": "Rank",
@@ -97,6 +98,33 @@
     "profile": "Profile",
     "myBookmarks": "My Bookmarks",
     "accountInfo": "Account Information"
+  },
+  "trade": {
+    "portfolio": "Portfolio",
+    "bankBalance": "Bank Balance",
+    "portfolioValue": "Portfolio Value",
+    "totalAssets": "Total Assets",
+    "coin": "Coin",
+    "quantity": "Quantity",
+    "currentPrice": "Current Price",
+    "currentValue": "Current Value",
+    "noHoldings": "No holdings yet",
+    "tradeHistory": "Trade History",
+    "date": "Date",
+    "type": "Type",
+    "price": "Price",
+    "balanceAfter": "Balance After",
+    "noTrades": "No trades yet",
+    "buy": "Buy",
+    "sell": "Sell",
+    "totalCost": "Total Cost",
+    "totalProceeds": "Total Proceeds",
+    "available": "Available",
+    "yourHoldings": "Your Holdings",
+    "errors": {
+      "invalidQuantity": "Please enter a valid quantity",
+      "insufficientQuantity": "Insufficient quantity"
+    }
   },
   "language": {
     "english": "English",

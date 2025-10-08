@@ -182,6 +182,10 @@ export const CreateAccountForm: React.FC = () => {
       <div className="create-account-form-card">
         <h1 className="create-account-form-title">{t('auth.registerTitle')}</h1>
         
+        <div className="signup-bonus-message">
+          {t('auth.signupBonus')}
+        </div>
+        
         {serverErrors && (
           <ErrorMessage 
             message={serverErrors} 
