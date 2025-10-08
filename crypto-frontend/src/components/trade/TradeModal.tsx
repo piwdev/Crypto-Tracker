@@ -127,7 +127,8 @@ export const TradeModal: React.FC<TradeModalProps> = ({
                   id="quantity"
                   value={quantity}
                   onChange={(e) => setQuantity(e.target.value)}
-                  step="0.00000001"
+                  step="0.01"
+                  //step="0.00000001"
                   min="0"
                   max={maxQuantity}
                   placeholder="0.00000000"
