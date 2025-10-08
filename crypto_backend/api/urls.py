@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import authentication_views, crypto_views, bookmark_views
+from .views import authentication_views, crypto_views, bookmark_views, trade_views
 
 
 urlpatterns = [
@@ -21,4 +21,10 @@ urlpatterns = [
         name="bookmark_delete",
     ),
     path("user/bookmarks/", bookmark_views.user_bookmarks, name="user_bookmarks"),
+
+    # Trade endpoints
+    path("trades/buy/", trade_views.trade_buy, name="trade_buy"),
+    path("trades/sell/", trade_views.trade_sell, name="trade_sell"),
+    path("user/portfolio/", trade_views.user_portfolio, name="user_portfolio"),
+    path("user/trade-history/", trade_views.user_trade_history, name="user_trade_history"),
 ]

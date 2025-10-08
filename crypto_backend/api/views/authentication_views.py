@@ -1,13 +1,14 @@
 from django.shortcuts import render
 from django.contrib.auth import login, logout
 from django.utils import timezone
+from django.db import transaction
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from ..serializers import UserRegistrationSerializer, UserLoginSerializer
-from ..models import User
+from ..models import User, BankBalance
 
 # Create your views here.
 
@@ -34,6 +35,9 @@ def register(request):
     
     if serializer.is_valid():
         user = serializer.save()
+        
+        # Create initial bank balance for demo trading
+        BankBalance.objects.create(user=user)
         
         # Create or get token for the user
         token, created = Token.objects.get_or_create(user=user)
@@ -78,9 +82,15 @@ def login_view(request):
         # Log the user in (creates session)
         login(request, user)
         
-        # Update last_login_at field
-        user.last_login_at = timezone.now()
-        user.save(update_fields=['last_login_at'])
+        # Ensure user has a BankBalance record (atomic operation)
+        with transaction.atomic():
+            # Update last_login_at field
+            user.last_login_at = timezone.now()
+            user.save(update_fields=['last_login_at'])
+            
+            # Check if BankBalance exists, create if missing
+            if not hasattr(user, 'bank_balance'):
+                BankBalance.objects.create(user=user)
         
         # Create or get token for the user
         token, created = Token.objects.get_or_create(user=user)
