@@ -1,6 +1,8 @@
 # crypto-tracker
-暗号通貨の価格をチェックできるサイト。ユーザーはお気に入りコインをブックマークできる。
-this is service to check cryptocurrency(coins)
+暗号通貨の価格をチェックできるサイト。
+ユーザーはお気に入りコインをブックマークとデモトレードが可能。
+
+this is service to check cryptocurrency(coins) and demo-trade.
 
 **サイトURL https://crypto-tracker.parkinwoo.dev/**
 
@@ -8,19 +10,28 @@ this is service to check cryptocurrency(coins)
 id : sample@example.com<br>
 pw : password
 
-### Home ('/)
-<img width=40% height=40% alt="image" src="https://github.com/user-attachments/assets/efc745b1-579b-4e09-af0b-c787b77ac8dd" />
+### Home ('/')
+<img width=60% height=40% alt="image" src="https://github.com/user-attachments/assets/efc745b1-579b-4e09-af0b-c787b77ac8dd" />
+
+#### デモトレード
+<img width="50%" height="1784" alt="image" src="https://github.com/user-attachments/assets/23db023d-75cd-4231-89e0-618a59abf489" />
+
+<img width="50%" height="1784" alt="image" src="https://github.com/user-attachments/assets/edf99b09-e3c2-4405-b1a4-e41984d42aaf" />
+
+
+#### マイページ  
+<img width="3042" height="3598" alt="image" src="https://github.com/user-attachments/assets/fe756eee-4391-4262-8fd1-0344d33d7f66" />
+
+
+#### ログイン
+**ログインユーザーはbookmark可能**
+
+<img width=40% height=40% alt="image" src="https://github.com/user-attachments/assets/9cffda4d-ff85-47aa-aa2b-95d7b026a8c5" />
+
 
 ### List
 #### 非ログイン
 <img width=40% height=40% alt="image" src="https://github.com/user-attachments/assets/49cd1f7f-05c1-4619-876b-64c81226f1c7" />
-
-#### ログイン
-**ログインユーザーはbookmark可能**
-<img width=40% height=40% alt="image" src="https://github.com/user-attachments/assets/9cffda4d-ff85-47aa-aa2b-95d7b026a8c5" />
-
-#### マイページ  
-<img width=40% height=40% alt="image" src="https://github.com/user-attachments/assets/3f18e2f7-179e-4fd4-ad53-54d9ff33754c" />
 
 
 # Architecture
